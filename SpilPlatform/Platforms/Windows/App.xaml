@@ -1,0 +1,13 @@
+﻿<maui:MauiWinUIApplication
+    x:Class="SpilPlatform.WinUI.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:maui="using:Microsoft.Maui"
+    xmlns:local="using:SpilPlatform.WinUI"
+    xmlns:mvvm="clr-namespace:SpilPlatform.Mvvm.Views;assembly=SpilPlatform.Mvvm">
+
+    <Application.Resources>
+        <!-- Resources here -->
+    </Application.Resources>
+</maui:MauiWinUIApplication>
+
