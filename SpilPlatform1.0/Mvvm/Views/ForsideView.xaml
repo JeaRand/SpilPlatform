@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SpilPlatform.Mvvm.Views.ForsideView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="SpilView">
+
+    <!--  Baggrundsfarven som fader ud  -->
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Offset="0.2" Color="White" />
+            <GradientStop Offset="0.5" Color="#D6E295" />
+            <GradientStop Offset="0.5" Color="#D6E295" />
+            <GradientStop Offset="0.9" Color="White" />
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <ScrollView>
+        <Grid ColumnDefinitions="*, *, *, *, *" RowDefinitions="Auto, Auto, Auto, *, Auto, Auto, Auto">
+
+        <!--  Topbaren  -->
+        <BoxView
+            Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="7"
+            Color="#D6E295" />
+
+
+        <Image
+            Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Margin="20,10,20,10"
+            HeightRequest="80"
+            HorizontalOptions="Start"
+            Source="dorflogo15.png"
+            VerticalOptions="Start"
+            WidthRequest="200" />
+
+        <SearchBar
+            Grid.Row="0"
+            Grid.Column="2"
+            Grid.ColumnSpan="2"
+            Placeholder="Søg spil..."
+            PlaceholderColor="Black"
+            TextColor="Black"
+            VerticalOptions="Center"
+            HorizontalOptions="StartAndExpand"
+            WidthRequest="280" />
+
+
+
+        <Button
+            Grid.Row="0"
+            Grid.Column="5"
+            Grid.ColumnSpan="2"
+            BackgroundColor="White"
+            Clicked="OnOpenLoginClicked"
+            FontSize="14"
+            HorizontalOptions="Center"
+            HeightRequest="30"
+            WidthRequest="80"
+            Text="Login"
+            TextColor="Black" />
+
+        <Label
+            Grid.Row="1"
+            Grid.Column="2"
+            Grid.ColumnSpan="3"
+            Margin="0,30,0,30"
+            Padding="20"
+            FontFamily="Overskrift"
+            FontSize="32"
+            Text="Velkommen til Dorf Møllegård"
+            TextColor="Black" />
+
+        <StackLayout
+            Grid.Row="2"
+            Grid.Column="1"
+            Padding="20">
+            <Label
+                FontFamily="UnderOverskrift"
+                FontSize="28"
+                Text="{Binding Spil.Titel}"
+                TextColor="Black" />
+            <Label
+                FontFamily="Brødtekst"
+                FontSize="16"
+                Text="{Binding Spil.Beskrivelse}"
+                TextColor="Black" />
+
+            <Image
+                Margin="0,20,0,20"
+                Source="pussle_spil.png"
+                WidthRequest="340" />
+
+            <Button
+                Margin="0,0,0,20"
+                BackgroundColor="#D6E295"
+                Clicked="OnOpenGameClicked"
+                FontSize="20"
+                HorizontalOptions="CenterAndExpand"
+                Text="Åbn Spil"
+                TextColor="Black" />
+
+           
+        </StackLayout>
+
+
+    </Grid>
+    </ScrollView>
+</ContentPage>
+

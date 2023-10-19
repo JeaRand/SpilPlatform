@@ -1,13 +1,53 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
+    x:Class="SpilPlatform.Mvvm.Views.LoginView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    x:Class="SpilPlatform.Mvvm.Views.LoginView">
+    BackgroundColor="#D6E295">
 
-    <StackLayout>
-        <Entry Placeholder="Brugernavn" Text="{Binding Username}" />
-        <Entry Placeholder="Adgangskode" Text="{Binding Password}" IsPassword="True" />
-        <Button Text="Log ind" Command="{Binding AuthenticateCommand}" />
-        <Label Text="Logget ind" IsVisible="{Binding IsAuthenticated}" />
-    </StackLayout>
+    <ContentPage.Content>
+        <StackLayout>
+
+            <Label
+                Margin="20,40,20,20"
+                FontFamily="Overskrift"
+                FontSize="24"
+                HorizontalTextAlignment="Center"
+                Text="Log ind for at vælge hvilke spil som skal vises op forsiden!"
+                TextColor="Black" />
+            <Entry
+                Margin="0,50,0,20"
+                FontFamily="UnderOverskrift"
+                Placeholder="Brugernavn"
+                Text="{Binding Username}"
+                WidthRequest="180" />
+            <Entry
+                Margin="0,20,0,50"
+                FontFamily="UnderOverskrift"
+                IsPassword="True"
+                Placeholder="Adgangskode"
+                Text="{Binding Password}"
+                WidthRequest="180" />
+
+            <Button
+                x:Name="LogInd"
+                BackgroundColor="White"
+                Clicked="LoginButton_Clicked"
+                Command="{Binding BindingContext.Authenticate, Source={x:Reference Name=LogInd}}"
+                FontFamily="Overskrift"
+                FontSize="16"
+                HeightRequest="30"
+                HorizontalOptions="Center"
+                Text="Login"
+                TextColor="Black"
+                WidthRequest="80">
+                <Button.IsEnabled>
+                    <OnPlatform x:TypeArguments="x:Boolean">
+                        <On Platform="Android, iOS">False</On>
+                        <On Platform="UWP">True</On>
+                    </OnPlatform>
+                </Button.IsEnabled>
+            </Button>
+        </StackLayout>
+    </ContentPage.Content>
 </ContentPage>
