@@ -1,11 +1,7 @@
 ﻿using SpilPlatform.Mvvm.Models;
-using System;
-using System.Collections.Generic;
+using SpilPlatform.Mvvm.Views;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace SpilPlatform.Mvvm.ViewModels
@@ -48,11 +44,11 @@ namespace SpilPlatform.Mvvm.ViewModels
             }
         }
 
-        public ICommand AuthenticateCommand => new Command(Authenticate);
+        public ICommand AuthenticateCommand => new Command(Authenticate, CanLogin);
 
         public LoginViewModel()
         {
-            // Initialiser eventuelle yderligere egenskaber her, hvis det er nødvendigt
+            // Initialize any additional properties here if necessary
         }
 
         public void Authenticate()
