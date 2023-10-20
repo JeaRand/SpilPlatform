@@ -37,17 +37,16 @@
             VerticalOptions="Start"
             WidthRequest="200" />
 
-        <SearchBar
-            Grid.Row="0"
-            Grid.Column="2"
-            Grid.ColumnSpan="2"
-            Placeholder="Søg spil..."
-            PlaceholderColor="Black"
-            TextColor="Black"
-            VerticalOptions="Center"
-            HorizontalOptions="StartAndExpand"
-            WidthRequest="280" />
-
+            <Label
+     Grid.Row="0"
+     Grid.Column="2"
+     Grid.ColumnSpan="3"
+     Margin="0,30,0,0"
+     Padding="20"
+     FontFamily="Overskrift"
+     FontSize="32"
+     Text="Velkommen til Dorf Møllegård"
+     TextColor="Black" />
 
 
         <Button
@@ -63,30 +62,59 @@
             Text="Login"
             TextColor="Black" />
 
-        <Label
-            Grid.Row="1"
-            Grid.Column="2"
-            Grid.ColumnSpan="3"
-            Margin="0,30,0,30"
-            Padding="20"
-            FontFamily="Overskrift"
-            FontSize="32"
-            Text="Velkommen til Dorf Møllegård"
-            TextColor="Black" />
+            
+            <Label
+             Grid.Row="1"
+             Grid.Column="1"
+             Grid.ColumnSpan="3"
+             Margin="0,80,0,0"
+             Padding="20"
+             FontFamily="UnderOverskrift"
+             FontSize="24"
+             Text="Vælg klassetrin for at se spil:"
+             TextColor="Black" />
 
-        <StackLayout
-            Grid.Row="2"
+            <StackLayout Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="5" VerticalOptions="StartAndExpand" HorizontalOptions="StartAndExpand" >
+                <CollectionView ItemsSource="{Binding KategoriVM.Kategorier}">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal" SnapPointsAlignment="Center" SnapPointsType="MandatorySingle" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <ContentView>
+                                    <Button Text="{Binding Navn}" 
+                                            WidthRequest="150" 
+                                            HeightRequest="50" 
+                                            Margin="10,10,140,0" 
+                                            FontFamily="UnderOverskrift" 
+                                            FontSize="18"
+                                            BackgroundColor="#D6E295"
+                                            TextColor="Black"/>
+                                </ContentView>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+
+
+
+
+
+            <StackLayout
+            Grid.Row="3"
             Grid.Column="1"
             Padding="20">
             <Label
                 FontFamily="UnderOverskrift"
                 FontSize="28"
-                Text="{Binding Spil.Titel}"
+                Text="{Binding SpilVM.Spil.Titel}"
                 TextColor="Black" />
             <Label
                 FontFamily="Brødtekst"
                 FontSize="16"
-                Text="{Binding Spil.Beskrivelse}"
+                Text="{Binding SpilVM.Spil.Beskrivelse}"
                 TextColor="Black" />
 
             <Image
@@ -101,7 +129,10 @@
                 FontSize="20"
                 HorizontalOptions="CenterAndExpand"
                 Text="Åbn Spil"
-                TextColor="Black" />
+                TextColor="Black"
+                FontFamily="UnderOverskrift"
+                WidthRequest="150" 
+                HeightRequest="50"/>
 
            
         </StackLayout>

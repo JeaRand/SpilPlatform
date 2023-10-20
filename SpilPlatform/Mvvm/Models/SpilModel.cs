@@ -13,5 +13,7 @@ namespace SpilPlatform.Mvvm.Models
         public string Beskrivelse { get; set; }
         public long Ikon { get; set; }
         public string Link { get; set; }
+
+        public string Kategori { get; set; }
     }
 }

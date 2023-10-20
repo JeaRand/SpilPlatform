@@ -12,20 +12,29 @@ namespace SpilPlatform.Mvvm.Views
         {
             InitializeComponent();
 
-            BindingContext = new SpilViewModel();
+            var aggregationViewModel = new AggregationViewModel
+            {
+                SpilVM = new SpilViewModel(),
+                KategoriVM = new KategoriViewModel()
+            };
+
+            BindingContext = aggregationViewModel;
         }
 
         private async void OnOpenGameClicked(object sender, EventArgs e)
         {
+            // Du kan nu få adgang til SpilViewModel via AggregationViewModel
             await Navigation.PushAsync(new SpilView());
-
         }
 
         private async void OnOpenLoginClicked(object sender, EventArgs e)
         {
+            // Du kan også få adgang til KategoriViewModel via AggregationViewModel
             await Navigation.PushAsync(new LoginView());
         }
-
-
     }
+
+
+
 }
+
