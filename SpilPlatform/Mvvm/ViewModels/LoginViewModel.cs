@@ -1,10 +1,8 @@
-﻿
-using SpilPlatform.Mvvm.Models;
+﻿using SpilPlatform.Mvvm.Models;
 using SpilPlatform.Mvvm.Views;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-
 
 namespace SpilPlatform.Mvvm.ViewModels
 {
@@ -23,7 +21,7 @@ namespace SpilPlatform.Mvvm.ViewModels
             {
                 username = value;
                 OnPropertyChanged();
-                ((Command)AuthenticateCommand).ChangeCanExecute(); // Update the button state when the username changes.
+                ((Command)AuthenticateCommand).ChangeCanExecute(); // Opdater knappens tilstand, når brugernavnet ændres.
             }
         }
 
@@ -34,7 +32,7 @@ namespace SpilPlatform.Mvvm.ViewModels
             {
                 password = value;
                 OnPropertyChanged();
-                ((Command)AuthenticateCommand).ChangeCanExecute(); // Update the button state when the password changes.
+                ((Command)AuthenticateCommand).ChangeCanExecute(); // Opdater knappens tilstand, når adgangskoden ændres.
             }
         }
 
@@ -52,21 +50,25 @@ namespace SpilPlatform.Mvvm.ViewModels
 
         public LoginViewModel()
         {
-            // Initialize any additional properties here if necessary
+            // Initialiser eventuelle yderligere egenskaber her, hvis det er nødvendigt.
         }
 
+        /// <summary>
+        /// Bestemmer, om brugeren kan logge ind baseret på indtastet brugernavn og adgangskode.
+        /// </summary>
         public bool CanLogin()
         {
-            // Check if both username and password are filled.
+            // Tjek om både brugernavn og adgangskode er udfyldt.
             return !string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password);
         }
 
+        /// <summary>
+        /// Forsøger at godkende brugeren ved at sammenligne brugernavn og adgangskode med superbrugeroplysninger.
+        /// </summary>
         public void Authenticate()
         {
             IsAuthenticated = SuperUser.Username == Username && SuperUser.Password == Password;
-           
         }
-
 
         public event PropertyChangedEventHandler PropertyChanged;
 
