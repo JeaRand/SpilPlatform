@@ -1,144 +1,111 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
-    x:Class="SpilPlatform.Mvvm.Views.ForsideView"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="SpilView">
-
-    <!--  Baggrundsfarven som fader ud  -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SpilPlatform.Mvvm.Views.ForsideView"
+             Title="Forside View">
+    
+    <!-- Background with gradient effect -->
     <ContentPage.Background>
-        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-            <GradientStop Offset="0.2" Color="White" />
-            <GradientStop Offset="0.5" Color="#D6E295" />
-            <GradientStop Offset="0.5" Color="#D6E295" />
-            <GradientStop Offset="0.9" Color="White" />
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#1C1C1C" Offset="0.0"/>
+            <GradientStop Color="#333333" Offset="1.0"/>
         </LinearGradientBrush>
     </ContentPage.Background>
 
     <ScrollView>
-        <Grid ColumnDefinitions="*, *, *, *, *" RowDefinitions="Auto, Auto, Auto, *, Auto, Auto, Auto">
+        <!-- Main content -->
+        <StackLayout>
 
-        <!--  Topbaren  -->
-        <BoxView
-            Grid.Row="0"
-            Grid.Column="0"
-            Grid.ColumnSpan="7"
-            Color="#D6E295" />
+            <!-- Main header with logo, search field, and login button -->
+            <Frame HasShadow="True" Padding="5" Margin="0,0,0,5" Style="{StaticResource MainHeaderBackgroundColor}" BorderColor="Black" HeightRequest="100">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <!-- Logo -->
+                        <ColumnDefinition Width="*"/>
+                        <!-- Search field -->
+                        <ColumnDefinition Width="Auto"/>
+                        <!-- Login button -->
+                    </Grid.ColumnDefinitions>
 
+                    <!-- Logo image -->
+                    <Image Source="dorflogo.png" HeightRequest="90" Aspect="Fill"/>
+                    <!-- Search field -->
+                    <SearchBar Placeholder="Search for games..." Style="{StaticResource SearchBarBackgroundColor}" VerticalOptions="Center" HorizontalOptions="End" Margin="0,0,30,0" Grid.Column="1" />
 
-        <Image
-            Grid.Row="0"
-            Grid.Column="0"
-            Grid.ColumnSpan="2"
-            Margin="20,10,20,10"
-            HeightRequest="80"
-            HorizontalOptions="Start"
-            Source="dorflogo15.png"
-            VerticalOptions="Start"
-            WidthRequest="200" />
+                    <!-- Login button -->
+                    <Button Text="Login" Clicked="OnOpenLoginClicked" Style="{StaticResource ButtonBackgroundColor}" FontAttributes="Bold" TextColor="Black" Margin="0,0,30,0" BorderWidth="1" WidthRequest="100" HeightRequest="50" BorderColor="Black" CornerRadius="5" Padding="5" VerticalOptions="Center" Grid.Column="2" />
+                </Grid>
+            </Frame>
 
-            <Label
-     Grid.Row="0"
-     Grid.Column="2"
-     Grid.ColumnSpan="3"
-     Margin="0,30,0,0"
-     Padding="20"
-     FontFamily="Overskrift"
-     FontSize="32"
-     Text="Velkommen til Dorf Møllegård"
-     TextColor="Black" />
+            <!-- Horizontal list with category buttons -->
+            <ScrollView Orientation="Horizontal" HorizontalOptions="Center" Padding="0,10">
+                <StackLayout Orientation="Horizontal" Spacing="40">
+                    <!-- Category buttons -->
+                    <Button Text="0-1 klasse" Style="{StaticResource CategoryButtonStyle}" FontAttributes="Bold" TextColor="White"/>
+                    <Button Text="2-3 klasse" Style="{StaticResource CategoryButtonStyle}" FontAttributes="Bold" TextColor="White"/>
+                    <Button Text="4-5 klasse" Style="{StaticResource CategoryButtonStyle}" FontAttributes="Bold" TextColor="White"/>
+                    <Button Text="6-7 klasse" Style="{StaticResource CategoryButtonStyle}" FontAttributes="Bold" TextColor="White"/>
+                </StackLayout>
+            </ScrollView>
 
-
-        <Button
-            Grid.Row="0"
-            Grid.Column="5"
-            Grid.ColumnSpan="2"
-            BackgroundColor="White"
-            Clicked="OnOpenLoginClicked"
-            FontSize="14"
-            HorizontalOptions="Center"
-            HeightRequest="30"
-            WidthRequest="80"
-            Text="Login"
-            TextColor="Black" />
+            <!-- White line separator between category and game tiles -->
+            <BoxView Style="{StaticResource BoxViewBackgroundColor}" HeightRequest="3" />
 
             
-            <Label
-             Grid.Row="1"
-             Grid.Column="1"
-             Grid.ColumnSpan="3"
-             Margin="0,80,0,0"
-             Padding="20"
-             FontFamily="UnderOverskrift"
-             FontSize="24"
-             Text="Vælg klassetrin for at se spil:"
-             TextColor="Black" />
+            <!-- Game tiles view -->
+            <CollectionView Margin="0,20,0,0">
+                <CollectionView.ItemsLayout>
+                    <!-- Use 'Span' to determine the number of columns based on device width -->
+                    <GridItemsLayout Orientation="Vertical" Span="{OnIdiom Phone=1, Tablet=2, Desktop=4}" VerticalItemSpacing="10" HorizontalItemSpacing="20"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="10" Style="{StaticResource FrameBackgroundColor}" CornerRadius="15" BorderColor="Black">
+                            <Grid RowSpacing="4">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <!-- Game name label -->
+                                    <RowDefinition Height="2*"/>
+                                    <!-- Game image -->
+                                    <RowDefinition Height="Auto"/>
+                                    <!-- Play button, ensure it's always visible -->
+                                </Grid.RowDefinitions>
+                                <!-- Game name label -->
+                                <Label Text="{Binding .}"
+                           VerticalOptions="Start"
+                           HorizontalOptions="CenterAndExpand"
+                           Opacity="0.9"
+                           TextColor="White" 
+                           Padding="5"
+                           FontAttributes="Bold"
+                           Grid.Row="0" />
 
-            <StackLayout Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="5" VerticalOptions="StartAndExpand" HorizontalOptions="StartAndExpand" >
-                <CollectionView ItemsSource="{Binding KategoriVM.Kategorier}">
-                    <CollectionView.ItemsLayout>
-                        <LinearItemsLayout Orientation="Horizontal" SnapPointsAlignment="Center" SnapPointsType="MandatorySingle" />
-                    </CollectionView.ItemsLayout>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <ContentView>
-                                    <Button Text="{Binding Navn}" 
-                                            WidthRequest="150" 
-                                            HeightRequest="50" 
-                                            Margin="10,10,140,0" 
-                                            FontFamily="UnderOverskrift" 
-                                            FontSize="18"
-                                            BackgroundColor="#D6E295"
-                                            TextColor="Black"/>
-                                </ContentView>
+                                <!-- Game image location -->
+                                <Image Source="pussle_spil.png" Aspect="AspectFill" Grid.Row="1" />
+
+                                <!-- Play button -->
+                                <Button Text="Play" MinimumHeightRequest="50" Style="{StaticResource ButtonBackgroundColor}" TextColor="Black" BorderColor="Black" BorderWidth="1" FontAttributes="Bold" MinimumWidthRequest="90" Margin="0,0,0,5" Clicked="OnOpenGameClicked" HorizontalOptions="Center" Grid.Row="2" />
                             </Grid>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
 
+                <!-- Example game list not fully implemented, just an example -->
+                <CollectionView.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Game 1</x:String>
+                        <x:String>Game 2</x:String>
+                        <x:String>Game 3</x:String>
+                        <x:String>Game 4</x:String>
+                        <x:String>Game 5</x:String>
+                        <x:String>Game 6</x:String>
+                        <x:String>Game 7</x:String>
+                        <x:String>Game 8</x:String>
+                        <x:String>Game 9</x:String>
+                    </x:Array>
+                </CollectionView.ItemsSource>
+            </CollectionView>
 
-
-
-
-            <StackLayout
-            Grid.Row="3"
-            Grid.Column="1"
-            Padding="20">
-            <Label
-                FontFamily="UnderOverskrift"
-                FontSize="28"
-                Text="{Binding SpilVM.Spil.Titel}"
-                TextColor="Black" />
-            <Label
-                FontFamily="Brødtekst"
-                FontSize="16"
-                Text="{Binding SpilVM.Spil.Beskrivelse}"
-                TextColor="Black" />
-
-            <Image
-                Margin="0,20,0,20"
-                Source="pussle_spil.png"
-                WidthRequest="340" />
-
-            <Button
-                Margin="0,0,0,20"
-                BackgroundColor="#D6E295"
-                Clicked="OnOpenGameClicked"
-                FontSize="20"
-                HorizontalOptions="CenterAndExpand"
-                Text="Åbn Spil"
-                TextColor="Black"
-                FontFamily="UnderOverskrift"
-                WidthRequest="150" 
-                HeightRequest="50"/>
-
-           
         </StackLayout>
-
-
-    </Grid>
     </ScrollView>
 </ContentPage>
-

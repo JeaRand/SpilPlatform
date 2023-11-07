@@ -3,6 +3,7 @@ using SpilPlatform.Mvvm.ViewModels;
 using SpilPlatform.Mvvm.Views;
 using System;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Graphics;
 
 namespace SpilPlatform.Mvvm.Views
 {
@@ -32,9 +33,10 @@ namespace SpilPlatform.Mvvm.Views
             // Du kan også få adgang til KategoriViewModel via AggregationViewModel
             await Navigation.PushAsync(new LoginView());
         }
+        void OnPuzzleCategoryClicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new SpilView());
+        }
     }
-
-
-
 }
 

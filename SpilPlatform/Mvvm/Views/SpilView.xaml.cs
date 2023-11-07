@@ -15,7 +15,7 @@ public partial class SpilView : ContentPage
     }
     private async void OnBackButtonClicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new ForsideView());
+        await Navigation.PopAsync();
     }
 
 

@@ -43,8 +43,9 @@ namespace SpilPlatform.Mvvm.ViewModels
             {
                 Titel = "Pusslespil",
                 Beskrivelse = "Pusslespil hvor du kan lære mere om de forskellige Møller i Danmark",
-                Link = "https://simmer.io/@Leaske/mosspuzzle",
+                Link = "https://simmer.io/@Leaske/mossgame",
             };
+    
         }
 
         protected virtual void OnPropertyChanged(string propertyName)

@@ -53,6 +53,7 @@
 	  <None Remove="Resources\Fonts\Baskerville-Regular Regular.otf" />
 	  <None Remove="Resources\Fonts\Goudy Old Style Bold.ttf" />
 	  <None Remove="Resources\Images\dorflogo15.png" />
+	  <None Remove="Resources\Images\frilagt.png" />
 	  <None Remove="Resources\Images\pussle_spil.png" />
 	</ItemGroup>
 

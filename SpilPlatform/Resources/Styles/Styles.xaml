@@ -2,6 +2,62 @@
 <?xaml-comp compile="true" ?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
+    <!-- vores egen styles og farver, husk overskrift -->
+
+    <!-- Main header color styles -->
+    <Style x:Key="MainHeaderBackgroundColor" TargetType="View">
+        <Setter Property="BackgroundColor" Value="#2D2D2D"/>
+    </Style>
+
+    <!-- Button Color styles -->
+    <Style x:Key="ButtonBackgroundColor" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="#d6e295"/>
+    </Style>
+
+    <Style x:Key="ButtonBackgroundColorTransparent" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="Transparent"/>
+    </Style>
+
+    <!-- Searchbar Color Styles -->
+    <Style x:Key="SearchBarBackgroundColor" TargetType="SearchBar">
+        <Setter Property="BackgroundColor" Value="#434343"/>
+    </Style>
+
+    <!-- Frame color styles -->
+    <Style x:Key="FrameBackgroundColor" TargetType="Frame">
+        <Setter Property="BackgroundColor" Value="#535353"/>
+    </Style>
+
+    <!-- BoxView color styles -->
+    <Style x:Key="BoxViewBackgroundColor" TargetType="BoxView">
+        <Setter Property="BackgroundColor" Value="#FFFFFF"/>
+    </Style>
+
+
+    <Style x:Key="CategoryButtonStyle" TargetType="Button">
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="BorderWidth" Value="1" />
+        <Setter Property="BorderColor" Value="Black" />
+        <!-- Define the visual states for the button -->
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Pressed">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="#606060" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <!--  slut på vores styles  -->
+
     <Style TargetType="ActivityIndicator">
         <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
     </Style>

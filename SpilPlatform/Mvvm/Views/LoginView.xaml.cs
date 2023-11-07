@@ -5,7 +5,7 @@ namespace SpilPlatform.Mvvm.Views
 {
     public partial class LoginView : ContentPage
     {
-        private LoginViewModel viewModel;
+        private readonly LoginViewModel viewModel;
 
         public LoginView()
         {
@@ -35,6 +35,13 @@ namespace SpilPlatform.Mvvm.Views
                 await DisplayAlert("Advarsel", "Du skal udfylde både brugernavn og adgangskode for at logge ind.", "OK");
             }
         }
+        // Event handler for the Back button
+        private async void BackButton_Clicked(object sender, EventArgs e)
+        {
+            // Navigate back to the previous page
+            await Navigation.PopAsync();
+        }
+
 
     }
 }
