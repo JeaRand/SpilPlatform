@@ -23,7 +23,7 @@
             Clicked="OnBackButtonClicked"
             FontSize="20"
             HorizontalOptions="CenterAndExpand"
-            Text="Back"
+            Text="Tilbage"
             TextColor="Black" />
         </VerticalStackLayout>
     </ScrollView>

@@ -8,6 +8,10 @@
     <Style x:Key="MainHeaderBackgroundColor" TargetType="View">
         <Setter Property="BackgroundColor" Value="#2D2D2D"/>
     </Style>
+    
+    <Style x:Key="LogoBackgroundColor" TargetType="View">
+        <Setter Property="BackgroundColor" Value="White"/>
+    </Style>
 
     <!-- Button Color styles -->
     <Style x:Key="ButtonBackgroundColor" TargetType="Button">

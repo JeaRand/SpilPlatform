@@ -1,96 +1,172 @@
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SpilPlatform.Mvvm.Views.ForsideView"
-             Title="Forside View">
-    
-    <!-- Background with gradient effect -->
+<ContentPage
+    x:Class="SpilPlatform.Mvvm.Views.ForsideView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Forside View">
+
+    <!--  Background with gradient effect  -->
     <ContentPage.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-            <GradientStop Color="#1C1C1C" Offset="0.0"/>
-            <GradientStop Color="#333333" Offset="1.0"/>
+            <GradientStop Offset="0.0" Color="#1C1C1C" />
+            <GradientStop Offset="1.0" Color="#333333" />
         </LinearGradientBrush>
     </ContentPage.Background>
 
     <ScrollView>
-        <!-- Main content -->
+        <!--  Main content  -->
         <StackLayout>
 
-            <!-- Main header with logo, search field, and login button -->
-            <Frame HasShadow="True" Padding="5" Margin="0,0,0,5" Style="{StaticResource MainHeaderBackgroundColor}" BorderColor="Black" HeightRequest="100">
+            <!--  Main header with logo, search field, and login button  -->
+            <Frame
+                Margin="0,0,0,5"
+                Padding="5"
+                BorderColor="Black"
+                HasShadow="True"
+                HeightRequest="100"
+                Style="{StaticResource MainHeaderBackgroundColor}">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <!-- Logo -->
-                        <ColumnDefinition Width="*"/>
-                        <!-- Search field -->
-                        <ColumnDefinition Width="Auto"/>
-                        <!-- Login button -->
+                        <ColumnDefinition Width="Auto" />
+                        <!--  Logo  -->
+                        <ColumnDefinition Width="*" />
+                        <!--  Search field  -->
+                        <ColumnDefinition Width="Auto" />
+                        <!--  Login button  -->
                     </Grid.ColumnDefinitions>
 
-                    <!-- Logo image -->
-                    <Image Source="dorflogo.png" HeightRequest="90" Aspect="Fill"/>
-                    <!-- Search field -->
-                    <SearchBar Placeholder="Search for games..." Style="{StaticResource SearchBarBackgroundColor}" VerticalOptions="Center" HorizontalOptions="End" Margin="0,0,30,0" Grid.Column="1" />
+                    <!--  Logo image  -->
+                    <Image
+                        Aspect="Fill"
+                        HeightRequest="90"
+                        Source="dorflogo.png"
+                        />
+                    <!--  Search field  -->
+                    <SearchBar
+                        Grid.Column="1"
+                        Margin="0,0,30,0"
+                        HorizontalOptions="End"
+                        Placeholder="Search for games..."
+                        Style="{StaticResource SearchBarBackgroundColor}"
+                        VerticalOptions="Center" />
 
-                    <!-- Login button -->
-                    <Button Text="Login" Clicked="OnOpenLoginClicked" Style="{StaticResource ButtonBackgroundColor}" FontAttributes="Bold" TextColor="Black" Margin="0,0,30,0" BorderWidth="1" WidthRequest="100" HeightRequest="50" BorderColor="Black" CornerRadius="5" Padding="5" VerticalOptions="Center" Grid.Column="2" />
+                    <!--  Login button  -->
+                    <Button
+                        Grid.Column="2"
+                        Margin="0,0,30,0"
+                        Padding="5"
+                        BorderColor="Black"
+                        BorderWidth="1"
+                        Clicked="OnOpenLoginClicked"
+                        CornerRadius="5"
+                        FontAttributes="Bold"
+                        HeightRequest="50"
+                        Style="{StaticResource ButtonBackgroundColor}"
+                        Text="Login"
+                        TextColor="Black"
+                        VerticalOptions="Center"
+                        WidthRequest="100" />
                 </Grid>
             </Frame>
 
-            <!-- Horizontal list with category buttons -->
-            <ScrollView Orientation="Horizontal" HorizontalOptions="Center" Padding="0,10">
+            <!--  Horizontal list with category buttons  -->
+            <ScrollView
+                Padding="0,10"
+                HorizontalOptions="Center"
+                Orientation="Horizontal">
                 <StackLayout Orientation="Horizontal" Spacing="40">
-                    <!-- Category buttons -->
-                    <Button Text="0-1 klasse" Style="{StaticResource CategoryButtonStyle}" FontAttributes="Bold" TextColor="White"/>
-                    <Button Text="2-3 klasse" Style="{StaticResource CategoryButtonStyle}" FontAttributes="Bold" TextColor="White"/>
-                    <Button Text="4-5 klasse" Style="{StaticResource CategoryButtonStyle}" FontAttributes="Bold" TextColor="White"/>
-                    <Button Text="6-7 klasse" Style="{StaticResource CategoryButtonStyle}" FontAttributes="Bold" TextColor="White"/>
+                    <!--  Category buttons  -->
+                    <Button
+                        FontAttributes="Bold"
+                        Style="{StaticResource CategoryButtonStyle}"
+                        Text="0-1 klasse"
+                        TextColor="White" />
+                    <Button
+                        FontAttributes="Bold"
+                        Style="{StaticResource CategoryButtonStyle}"
+                        Text="2-3 klasse"
+                        TextColor="White" />
+                    <Button
+                        FontAttributes="Bold"
+                        Style="{StaticResource CategoryButtonStyle}"
+                        Text="4-5 klasse"
+                        TextColor="White" />
+                    <Button
+                        FontAttributes="Bold"
+                        Style="{StaticResource CategoryButtonStyle}"
+                        Text="6-7 klasse"
+                        TextColor="White" />
                 </StackLayout>
             </ScrollView>
 
-            <!-- White line separator between category and game tiles -->
-            <BoxView Style="{StaticResource BoxViewBackgroundColor}" HeightRequest="3" />
+            <!--  White line separator between category and game tiles  -->
+            <BoxView HeightRequest="3" Style="{StaticResource BoxViewBackgroundColor}" />
 
-            
-            <!-- Game tiles view -->
+
+            <!--  Game tiles view  -->
             <CollectionView Margin="0,20,0,0">
                 <CollectionView.ItemsLayout>
-                    <!-- Use 'Span' to determine the number of columns based on device width -->
-                    <GridItemsLayout Orientation="Vertical" Span="{OnIdiom Phone=1, Tablet=2, Desktop=4}" VerticalItemSpacing="10" HorizontalItemSpacing="20"/>
+                    <!--  Use 'Span' to determine the number of columns based on device width  -->
+                    <GridItemsLayout
+                        HorizontalItemSpacing="20"
+                        Orientation="Vertical"
+                        Span="{OnIdiom Phone=1,
+                                       Tablet=2,
+                                       Desktop=4}"
+                        VerticalItemSpacing="10" />
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame Padding="10" Style="{StaticResource FrameBackgroundColor}" CornerRadius="15" BorderColor="Black">
+                        <Frame
+                            Padding="10"
+                            BorderColor="Black"
+                            CornerRadius="15"
+                            Style="{StaticResource FrameBackgroundColor}">
                             <Grid RowSpacing="4">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <!-- Game name label -->
-                                    <RowDefinition Height="2*"/>
-                                    <!-- Game image -->
-                                    <RowDefinition Height="Auto"/>
-                                    <!-- Play button, ensure it's always visible -->
+                                    <RowDefinition Height="Auto" />
+                                    <!--  Game name label  -->
+                                    <RowDefinition Height="2*" />
+                                    <!--  Game image  -->
+                                    <RowDefinition Height="Auto" />
+                                    <!--  Play button, ensure it's always visible  -->
                                 </Grid.RowDefinitions>
-                                <!-- Game name label -->
-                                <Label Text="{Binding .}"
-                           VerticalOptions="Start"
-                           HorizontalOptions="CenterAndExpand"
-                           Opacity="0.9"
-                           TextColor="White" 
-                           Padding="5"
-                           FontAttributes="Bold"
-                           Grid.Row="0" />
+                                <!--  Game name label  -->
+                                <Label
+                                    Grid.Row="0"
+                                    Padding="5"
+                                    FontAttributes="Bold"
+                                    HorizontalOptions="CenterAndExpand"
+                                    Opacity="0.9"
+                                    Text="{Binding .}"
+                                    TextColor="White"
+                                    VerticalOptions="Start" />
 
-                                <!-- Game image location -->
-                                <Image Source="pussle_spil.png" Aspect="AspectFill" Grid.Row="1" />
+                                <!--  Game image location  -->
+                                <Image
+                                    Grid.Row="1"
+                                    Aspect="AspectFill"
+                                    Source="pussle_spil.png" />
 
-                                <!-- Play button -->
-                                <Button Text="Play" MinimumHeightRequest="50" Style="{StaticResource ButtonBackgroundColor}" TextColor="Black" BorderColor="Black" BorderWidth="1" FontAttributes="Bold" MinimumWidthRequest="90" Margin="0,0,0,5" Clicked="OnOpenGameClicked" HorizontalOptions="Center" Grid.Row="2" />
+                                <!--  Play button  -->
+                                <Button
+                                    Grid.Row="2"
+                                    Margin="0,0,0,5"
+                                    BorderColor="Black"
+                                    BorderWidth="1"
+                                    Clicked="OnOpenGameClicked"
+                                    FontAttributes="Bold"
+                                    HorizontalOptions="Center"
+                                    MinimumHeightRequest="50"
+                                    MinimumWidthRequest="90"
+                                    Style="{StaticResource ButtonBackgroundColor}"
+                                    Text="Spil"
+                                    TextColor="Black" />
                             </Grid>
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
 
-                <!-- Example game list not fully implemented, just an example -->
+                <!--  Example game list not fully implemented, just an example  -->
                 <CollectionView.ItemsSource>
                     <x:Array Type="{x:Type x:String}">
                         <x:String>Game 1</x:String>
