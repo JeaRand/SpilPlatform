@@ -38,8 +38,7 @@
                     <Image
                         Aspect="Fill"
                         HeightRequest="90"
-                        Source="dorflogo.png"
-                        />
+                        Source="dorflogohvid.png" />
                     <!--  Search field  -->
                     <SearchBar
                         Grid.Column="1"
