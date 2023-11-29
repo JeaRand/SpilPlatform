@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 
 namespace SpilPlatform.Mvvm.Models
 {
-    public class Spil
+    public class Game
     {
         public int GameId { get; set; }
-        public string Titel { get; set; }
-        public string Beskrivelse { get; set; }
-        public long Ikon { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public long Icon { get; set; }
         public string Link { get; set; }
-
-        public string Kategori { get; set; }
+        public string Category { get; set; }
     }
 }

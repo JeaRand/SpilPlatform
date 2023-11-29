@@ -58,20 +58,25 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.12" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 		<PackageReference Include="Microsoft.Identity.Client" Version="4.56.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <MauiXaml Update="Mvvm\Views\LoginView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Mvvm\Views\ForsideView.xaml">
+	  <MauiXaml Update="Mvvm\Views\FrontPageView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Mvvm\Views\SpilView.xaml">
+	  <MauiXaml Update="Mvvm\Views\GameView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Mvvm\Views\RegistrationView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
@@ -87,8 +92,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Mvvm\Views\ForsideView.xaml.cs">
-	    <DependentUpon>ForsideView.xaml</DependentUpon>
+	  <Compile Update="Mvvm\Views\FrontPageView.xaml.cs">
+	    <DependentUpon>FrontPageView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Mvvm\Views\GameView.xaml.cs">
+	    <DependentUpon>GameView.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 

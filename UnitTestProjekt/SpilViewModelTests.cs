@@ -16,23 +16,23 @@ namespace UnitTestProjekt
             // Arrange: Forbered testdata og objekter
 
             // Opret en instans af SpilViewModel
-            var viewModel = new SpilViewModel();
+            var viewModel = new GameViewModel();
 
             // Opret det forventede Spil-objekt
-            var expectedSpil = new Spil
+            var expectedSpil = new Game
             {
-                Titel = "Test Spil",
-                Beskrivelse = "Dette er en testbeskrivelse.",
+                Title = "Test Spil",
+                Description = "Dette er en testbeskrivelse.",
                 Link = "https://example.com/testgame",
             };
 
             // Act: Udfør handlinger på objekterne
 
             // Indstil Spil-egenskaben i viewModel med det forventede Spil-objekt
-            viewModel.Spil = expectedSpil;
+            viewModel.Game = expectedSpil;
 
             // Hent det faktiske Spil-objekt fra viewModel
-            var actualSpil = viewModel.Spil;
+            var actualSpil = viewModel.Game;
 
             // Assert: Bekræft forventede resultater
 

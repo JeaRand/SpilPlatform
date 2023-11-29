@@ -5,20 +5,20 @@ using System.ComponentModel;
 
 namespace SpilPlatform.Mvvm.ViewModels
 {
-    public class SpilViewModel : INotifyPropertyChanged
+    public class GameViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private Spil spil;
-        public Spil Spil
+        private Game game;
+        public Game Game
         {
-            get { return spil; }
+            get { return game; }
             set
             {
-                if (spil != value)
+                if (game != value)
                 {
-                    spil = value;
-                    OnPropertyChanged(nameof(Spil));
+                    game = value;
+                    OnPropertyChanged(nameof(Game));
                 }
             }
         }
@@ -37,12 +37,12 @@ namespace SpilPlatform.Mvvm.ViewModels
             }
         }
 
-        public SpilViewModel()
+        public GameViewModel()
         {
-            Spil = new Spil
+            Game = new Game
             {
-                Titel = "Pusslespil",
-                Beskrivelse = "Pusslespil hvor du kan lære mere om de forskellige Møller i Danmark",
+                Title = "Pusslespil",
+                Description = "Pusslespil hvor du kan lære mere om de forskellige Møller i Danmark",
                 Link = "https://simmer.io/@Leaske/mossgame",
             };
     

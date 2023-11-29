@@ -7,16 +7,16 @@ using Microsoft.Maui.Graphics;
 
 namespace SpilPlatform.Mvvm.Views
 {
-    public partial class ForsideView : ContentPage
+    public partial class FrontPageView : ContentPage
     {
-        public ForsideView()
+        public FrontPageView()
         {
             InitializeComponent();
 
             var aggregationViewModel = new AggregationViewModel
             {
-                SpilVM = new SpilViewModel(),
-                KategoriVM = new KategoriViewModel()
+                GameVM = new GameViewModel(),
+                CategoryVM = new CategoryViewModel()
             };
 
             BindingContext = aggregationViewModel;
@@ -25,7 +25,7 @@ namespace SpilPlatform.Mvvm.Views
         private async void OnOpenGameClicked(object sender, EventArgs e)
         {
             // Du kan nu få adgang til SpilViewModel via AggregationViewModel
-            await Navigation.PushAsync(new SpilView());
+            await Navigation.PushAsync(new GameView());
         }
 
         private async void OnOpenLoginClicked(object sender, EventArgs e)
@@ -35,7 +35,7 @@ namespace SpilPlatform.Mvvm.Views
         }
         void OnPuzzleCategoryClicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new SpilView());
+            Navigation.PushAsync(new GameView());
         }
     }
 }

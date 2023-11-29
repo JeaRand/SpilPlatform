@@ -2,9 +2,9 @@
 
 namespace SpilPlatform.Mvvm.Views
 {
-    internal class AggregationViewModel
+    public class AggregationViewModel
     {
-        public SpilViewModel SpilVM { get; set; }
-        public KategoriViewModel KategoriVM { get; set; }
+        public GameViewModel GameVM { get; set; }
+        public CategoryViewModel CategoryVM { get; set; }
     }
 }

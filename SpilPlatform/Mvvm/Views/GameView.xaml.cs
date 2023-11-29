@@ -6,12 +6,12 @@ using Microsoft.Maui.Controls;
 
 namespace SpilPlatform.Mvvm.Views;
 
-public partial class SpilView : ContentPage
+public partial class GameView : ContentPage
 {
-    public SpilView()
+    public GameView()
     {
         InitializeComponent();
-        BindingContext = new SpilViewModel();
+        BindingContext = new GameViewModel();
     }
     private async void OnBackButtonClicked(object sender, EventArgs e)
     {

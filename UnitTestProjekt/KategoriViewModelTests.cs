@@ -11,21 +11,21 @@ namespace UnitTestProjekt
             // Arrange: Forbered testdata og objekter
 
             // Opret en instans af KategoriViewModel
-            var viewModel = new KategoriViewModel();
+            var viewModel = new CategoryViewModel();
 
             // Forventede kategorier
-            var expectedKategorier = new List<KategoriModel>
+            var expectedKategorier = new List<Category>
             {
-                new KategoriModel("0-1 Klasse"),
-                new KategoriModel("2-3 Klasse"),
-                new KategoriModel("4-5 Klasse"),
-                new KategoriModel("6-7 Klasse")
+                new Category("0-1 Klasse"),
+                new Category("2-3 Klasse"),
+                new Category("4-5 Klasse"),
+                new Category("6-7 Klasse")
             };
 
             // Act: Udfør handlinger på objekterne
 
             // Hent den faktiske liste af kategorier fra viewModel og konverter den til en liste
-            var actualKategorier = viewModel.Kategorier.ToList();
+            var actualKategorier = viewModel.Categories.ToList();
 
             // Assert: Bekræft forventede resultater
 
@@ -35,7 +35,7 @@ namespace UnitTestProjekt
             // Sammenlign hver forventet kategori med den tilsvarende faktiske kategori
             for (int i = 0; i < expectedKategorier.Count; i++)
             {
-                Assert.Equal(expectedKategorier[i].Navn, actualKategorier[i].Navn);
+                Assert.Equal(expectedKategorier[i].Name, actualKategorier[i].Name);
             }
         }
     }

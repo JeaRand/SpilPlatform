@@ -3,13 +3,13 @@ using SpilPlatform.Mvvm.Views;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using SpilPlatform.Services;
 
 namespace SpilPlatform.Mvvm.ViewModels
 {
     public class LoginViewModel : INotifyPropertyChanged
     {
-        public User SuperUser { get; } = new User { Username = "Admin", Password = "Admin123" };
-
+        private UserDataService userDataService;
         private string username;
         private string password;
         private bool isAuthenticated;
@@ -50,6 +50,7 @@ namespace SpilPlatform.Mvvm.ViewModels
 
         public LoginViewModel()
         {
+            userDataService = new UserDataService();
             // Initialiser eventuelle yderligere egenskaber her, hvis det er nødvendigt.
         }
 
@@ -65,9 +66,29 @@ namespace SpilPlatform.Mvvm.ViewModels
         /// <summary>
         /// Forsøger at godkende brugeren ved at sammenligne brugernavn og adgangskode med superbrugeroplysninger.
         /// </summary>
-        public void Authenticate()
+        public async void Authenticate()
         {
-            IsAuthenticated = SuperUser.Username == Username && SuperUser.Password == Password;
+            try
+            {
+                var users = await userDataService.LoadUsersAsync(); // Method to load all users
+                var user = users.FirstOrDefault(u => u.Username == Username);
+
+                if (user != null && userDataService.VerifyPassword(Password, user.PasswordHash))
+                {
+                    IsAuthenticated = true;
+                    // Proceed with authenticated user
+                }
+                else
+                {
+                    IsAuthenticated = false;
+                    // Handle authentication failure (e.g., show error message)
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions (e.g., log error, show error message)
+                IsAuthenticated = false;
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

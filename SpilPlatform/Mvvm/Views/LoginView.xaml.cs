@@ -21,7 +21,7 @@ namespace SpilPlatform.Mvvm.Views
                 viewModel.Authenticate(); // Udfør autentifikation
                 if (viewModel.IsAuthenticated)
                 {
-                    await Navigation.PushAsync(new ForsideView()); // Naviger til næste visning ved vellykket login
+                    await Navigation.PushAsync(new FrontPageView()); // Naviger til næste visning ved vellykket login
                 }
                 else
                 {

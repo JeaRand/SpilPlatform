@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class KategoriModel
+public class Category
 {
-    public string Navn { get; set; }
+    public string Name { get; set; }
 
-    public KategoriModel(string navn)
+    public Category(string name)
     {
-        Navn = navn;
+        Name = name;
     }
 }
 
