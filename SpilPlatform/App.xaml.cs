@@ -15,13 +15,22 @@ namespace SpilPlatform
         {
             UserDataService userDataService = new UserDataService();
 
-            if (!await userDataService.CheckAdminExists())
+            if (DeviceInfo.Platform == DevicePlatform.WinUI)
             {
-                MainPage = new RegistrationView(); // Navigate to RegistrationView
+                userDataService.UserDataFileCheck();
+                if (!userDataService.CheckAdminExists())
+                {
+                    MainPage = new RegistrationView(); // Navigate to RegistrationView
+                }
+                else
+                {
+                    MainPage = new FrontPageView(); // An admin exists so app will start normally at the frontpage
+                }
             }
+
             else
             {
-                MainPage = new FrontPageView(); // Or your usual main page
+                MainPage = new FrontPageView();
             }
         }
     }

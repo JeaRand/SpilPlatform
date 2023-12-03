@@ -1,7 +1,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SpilPlatform.Mvvm.Views.FrontPageView"
-             Title="Forside View">
+             Title="FrontPageView">
     
     <!-- Background with gradient effect -->
     <ContentPage.Background>
@@ -31,9 +31,10 @@
                     <Image Source="dorflogo.png" HeightRequest="90" Aspect="Fill"/>
                     <!-- Search field -->
                     <SearchBar Placeholder="Search for games..." Style="{StaticResource SearchBarBackgroundColor}" VerticalOptions="Center" HorizontalOptions="End" Margin="0,0,30,0" Grid.Column="1" />
-
+                    <!-- Settings button -->
+                    <Button Text="Indstillinger" Clicked="OnOpenLoginClicked" Style="{StaticResource ButtonBackgroundColor}" FontAttributes="Bold" TextColor="Black" Margin="0,0,30,0" BorderWidth="1" WidthRequest="100" HeightRequest="50" BorderColor="Black" CornerRadius="5" Padding="5" VerticalOptions="Center" Grid.Column="1"  IsVisible="{OnPlatform WinUI='True', Default='False'}"/>
                     <!-- Login button -->
-                    <Button Text="Login" Clicked="OnOpenLoginClicked" Style="{StaticResource ButtonBackgroundColor}" FontAttributes="Bold" TextColor="Black" Margin="0,0,30,0" BorderWidth="1" WidthRequest="100" HeightRequest="50" BorderColor="Black" CornerRadius="5" Padding="5" VerticalOptions="Center" Grid.Column="2" />
+                    <Button Text="Log in" Clicked="OnOpenLoginClicked" Style="{StaticResource ButtonBackgroundColor}" FontAttributes="Bold" TextColor="Black" Margin="0,0,30,0" BorderWidth="1" WidthRequest="100" HeightRequest="50" BorderColor="Black" CornerRadius="5" Padding="5" VerticalOptions="Center" Grid.Column="2"/>
                 </Grid>
             </Frame>
 

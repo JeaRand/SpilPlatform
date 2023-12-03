@@ -33,6 +33,12 @@ namespace SpilPlatform.Mvvm.Views
             // Du kan også få adgang til KategoriViewModel via AggregationViewModel
             await Navigation.PushAsync(new LoginView());
         }
+
+        private async void OnOpenSettingsClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new SettingsView());
+        }
+
         void OnPuzzleCategoryClicked(object sender, EventArgs e)
         {
             Navigation.PushAsync(new GameView());

@@ -5,21 +5,21 @@ namespace SpilPlatform.Mvvm.Views
 {
     public partial class LoginView : ContentPage
     {
-        private readonly LoginViewModel viewModel;
+        private readonly LoginViewModel loginViewModel;
 
         public LoginView()
         {
             InitializeComponent();
-            viewModel = new LoginViewModel();
-            BindingContext = viewModel;
+            loginViewModel = new LoginViewModel();
+            BindingContext = loginViewModel;
         }
 
         private async void LoginButton_Clicked(object sender, EventArgs e)
         {
-            if (viewModel.CanLogin()) // Kontroller, om login er tilladt baseret på LoginViewModel
+            if (loginViewModel.CanLogin()) // Kontroller, om login er tilladt baseret på LoginViewModel
             {
-                viewModel.Authenticate(); // Udfør autentifikation
-                if (viewModel.IsAuthenticated)
+                loginViewModel.Authenticate(); // Udfør autentifikation
+                if (loginViewModel.IsAuthenticated)
                 {
                     await Navigation.PushAsync(new FrontPageView()); // Naviger til næste visning ved vellykket login
                 }

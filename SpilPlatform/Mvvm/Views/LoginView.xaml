@@ -61,23 +61,17 @@
 
                 <!-- Login Button -->
                 <Button
-                    x:Name="LogInd"
+                    x:Name="LogIn"
                     BackgroundColor="#FF6347"
                     Clicked="LoginButton_Clicked"
-                    Command="{Binding BindingContext.Authenticate, Source={x:Reference Name=LogInd}}"
+                    Command="{Binding BindingContext.Authenticate, Source={x:Reference Name=LogIn}}"
                     FontFamily="UnderOverskrift"
                     FontSize="16"
                     HorizontalOptions="Center"
                     BorderColor="Black"
-                    Text="Login"
+                    Text="Log ind"
                     TextColor="White"
                     WidthRequest="80">
-                    <Button.IsEnabled>
-                        <OnPlatform x:TypeArguments="x:Boolean">
-                            <On Platform="Android, iOS">False</On>
-                            <On Platform="UWP">True</On>
-                        </OnPlatform>
-                    </Button.IsEnabled>
                 </Button>
             </StackLayout>
 

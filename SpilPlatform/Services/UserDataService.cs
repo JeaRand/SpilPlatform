@@ -14,17 +14,35 @@ namespace SpilPlatform.Services
     {
         private readonly string filePath = Path.Combine(FileSystem.AppDataDirectory, "userdata.json");
 
-        public async Task<bool> CheckAdminExists()
+        public bool CheckAdminExists()
         {
             if (!File.Exists(filePath))
             {
                 return false; // File doesn't exist
             }
 
-            var userData = await File.ReadAllTextAsync(filePath);
+            var userData = File.ReadAllText(filePath);
             var users = JsonConvert.DeserializeObject<List<User>>(userData);
 
             return users?.Any(u => u.IsAdmin) ?? false; // Check if any admin user exists
+        }
+
+        public void UserDataFileCheck()
+        {
+            try
+            {
+                if (!File.Exists(filePath))
+                {
+                    // Create the file with an empty JSON array
+                    File.WriteAllText(filePath, "[]");
+                    System.Diagnostics.Debug.WriteLine($"File Path: {filePath}");
+
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error creating file: {ex.Message}");
+            }
         }
 
         public async Task<List<User>> LoadUsersAsync()
@@ -42,12 +60,15 @@ namespace SpilPlatform.Services
             }
         }
 
-        public async Task SaveUserDataAsync(User user)
+        public async Task SaveUserDataAsync(User user, string password)
         {
-            // Hash the user's password before saving
-            user.PasswordHash = HashPassword(user.PasswordHash);
+            var users = await LoadUsersAsync();
 
-            var userData = JsonConvert.SerializeObject(user);
+            // Add the new user to the list
+            user.PasswordHash = HashPassword(password);
+            users.Add(user);
+
+            var userData = JsonConvert.SerializeObject(users);
             using (var streamWriter = new StreamWriter(filePath, false))
             {
                 await streamWriter.WriteAsync(userData);
