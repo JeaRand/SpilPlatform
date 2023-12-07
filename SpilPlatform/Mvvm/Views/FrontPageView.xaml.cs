@@ -12,31 +12,60 @@ namespace SpilPlatform.Mvvm.Views
         public FrontPageView()
         {
             InitializeComponent();
+            BindingContext = App.ServiceProvider.GetService<AggregationViewModel>();
+        }
 
-            var aggregationViewModel = new AggregationViewModel
+        private async void OnGameClicked(object sender, EventArgs e)
+        {
+            try
             {
-                GameVM = new GameViewModel(),
-                CategoryVM = new CategoryViewModel()
-            };
-
-            BindingContext = aggregationViewModel;
+                await Navigation.PushAsync(new GameView());
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Navigation error: {ex.Message}");
+            }
         }
 
-        private async void OnOpenGameClicked(object sender, EventArgs e)
+        private async void OnLoginClicked(object sender, EventArgs e)
         {
-            // Du kan nu få adgang til SpilViewModel via AggregationViewModel
-            await Navigation.PushAsync(new GameView());
+            try
+            {
+                await Navigation.PushAsync(new LoginView());
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Navigation error: {ex.Message}");
+            }
         }
 
-        private async void OnOpenLoginClicked(object sender, EventArgs e)
+        private void OnLogoutClicked(object sender, EventArgs e)
         {
-            // Du kan også få adgang til KategoriViewModel via AggregationViewModel
-            await Navigation.PushAsync(new LoginView());
+            try 
+            { 
+                if (BindingContext is AggregationViewModel aggregationViewModel) 
+                {
+                    System.Diagnostics.Debug.WriteLine("Does this work?");
+                    // Use the public property to access the SessionManagementService
+                    aggregationViewModel.LogoutUser();
+                }
+            }
+            catch (Exception ex) 
+            { 
+                System.Diagnostics.Debug.WriteLine($"Navigation error: {ex.Message}");
+            }
         }
 
-        private async void OnOpenSettingsClicked(object sender, EventArgs e)
+        private async void OnSettingsClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new SettingsView());
+            try
+            {
+                await Navigation.PushAsync(new SettingsView());
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Navigation error: {ex.Message}");
+            }
         }
 
         void OnPuzzleCategoryClicked(object sender, EventArgs e)
@@ -45,4 +74,3 @@ namespace SpilPlatform.Mvvm.Views
         }
     }
 }
-

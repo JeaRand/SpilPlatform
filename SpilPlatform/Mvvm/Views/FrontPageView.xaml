@@ -1,8 +1,16 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:SpilPlatform.Converters"
              x:Class="SpilPlatform.Mvvm.Views.FrontPageView"
              Title="FrontPageView">
-    
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <!-- Background with gradient effect -->
     <ContentPage.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
@@ -24,17 +32,72 @@
                         <ColumnDefinition Width="*"/>
                         <!-- Search field -->
                         <ColumnDefinition Width="Auto"/>
-                        <!-- Login button -->
+                        <!-- Settings and Login buttons -->
                     </Grid.ColumnDefinitions>
 
                     <!-- Logo image -->
-                    <Image Source="dorflogo.png" HeightRequest="90" Aspect="Fill"/>
+                    <Image Source="dorflogo.png" HeightRequest="90" Aspect="Fill" Grid.Column="0"/>
+
                     <!-- Search field -->
-                    <SearchBar Placeholder="Search for games..." Style="{StaticResource SearchBarBackgroundColor}" VerticalOptions="Center" HorizontalOptions="End" Margin="0,0,30,0" Grid.Column="1" />
-                    <!-- Settings button -->
-                    <Button Text="Indstillinger" Clicked="OnOpenLoginClicked" Style="{StaticResource ButtonBackgroundColor}" FontAttributes="Bold" TextColor="Black" Margin="0,0,30,0" BorderWidth="1" WidthRequest="100" HeightRequest="50" BorderColor="Black" CornerRadius="5" Padding="5" VerticalOptions="Center" Grid.Column="1"  IsVisible="{OnPlatform WinUI='True', Default='False'}"/>
-                    <!-- Login button -->
-                    <Button Text="Log in" Clicked="OnOpenLoginClicked" Style="{StaticResource ButtonBackgroundColor}" FontAttributes="Bold" TextColor="Black" Margin="0,0,30,0" BorderWidth="1" WidthRequest="100" HeightRequest="50" BorderColor="Black" CornerRadius="5" Padding="5" VerticalOptions="Center" Grid.Column="2"/>
+                    <SearchBar Placeholder="S&#248;g efter spil..." Style="{StaticResource SearchBarBackgroundColor}" 
+                               VerticalOptions="Center" HorizontalOptions="Start" 
+                               Margin="10,0,30,0" Grid.Column="1" />
+
+                    <!-- Buttons container -->
+                    <StackLayout Orientation="Horizontal" Grid.Column="2" HorizontalOptions="End" Spacing="10">
+
+                        <!-- Settings Button -->
+                        <Button x:Name="settingsButton"
+                                Text="Indstillinger"
+                                Clicked="OnSettingsClicked"
+                                Style="{StaticResource ButtonBackgroundColor}" 
+                                FontAttributes="Bold" 
+                                TextColor="Black" 
+                                Margin="10,0,10,0" 
+                                BorderWidth="1" 
+                                WidthRequest="100" 
+                                HeightRequest="50" 
+                                BorderColor="Black" 
+                                CornerRadius="5" 
+                                Padding="5" 
+                                VerticalOptions="Center" 
+                                IsVisible="{Binding IsLoggedInUserAdmin, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                        <!-- Login Button -->
+                        <Button x:Name="loginButton"
+                                Text="Log ind"
+                                Clicked="OnLoginClicked"
+                                Style="{StaticResource ButtonBackgroundColor}" 
+                                FontAttributes="Bold" 
+                                TextColor="Black" 
+                                Margin="10,0,10,0" 
+                                BorderWidth="1" 
+                                WidthRequest="100" 
+                                HeightRequest="50" 
+                                BorderColor="Black" 
+                                CornerRadius="5" 
+                                Padding="5" 
+                                VerticalOptions="Center"
+                                IsVisible="{Binding IsUserLoggedIn, Converter={StaticResource InverseBooleanConverter}}"/>
+                        <!-- Logout Button -->
+                        <Button x:Name="logoutButton"
+                                Text="Log ud"
+                                Clicked="OnLogoutClicked"
+                                Style="{StaticResource ButtonBackgroundColor}" 
+                                FontAttributes="Bold" 
+                                TextColor="Black" 
+                                Margin="10,0,10,0" 
+                                BorderWidth="1" 
+                                WidthRequest="100" 
+                                HeightRequest="50" 
+                                BorderColor="Black" 
+                                CornerRadius="5" 
+                                Padding="5" 
+                                VerticalOptions="Center"
+                                IsVisible="{Binding IsUserLoggedIn, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+                        
+                       
+                    </StackLayout>
                 </Grid>
             </Frame>
 
@@ -52,7 +115,7 @@
             <!-- White line separator between category and game tiles -->
             <BoxView Style="{StaticResource BoxViewBackgroundColor}" HeightRequest="3" />
 
-            
+
             <!-- Game tiles view -->
             <CollectionView Margin="0,20,0,0">
                 <CollectionView.ItemsLayout>
@@ -85,7 +148,7 @@
                                 <Image Source="pussle_spil.png" Aspect="AspectFill" Grid.Row="1" />
 
                                 <!-- Play button -->
-                                <Button Text="Play" MinimumHeightRequest="50" Style="{StaticResource ButtonBackgroundColor}" TextColor="Black" BorderColor="Black" BorderWidth="1" FontAttributes="Bold" MinimumWidthRequest="90" Margin="0,0,0,5" Clicked="OnOpenGameClicked" HorizontalOptions="Center" Grid.Row="2" />
+                                <Button Text="Play" MinimumHeightRequest="50" Style="{StaticResource ButtonBackgroundColor}" TextColor="Black" BorderColor="Black" BorderWidth="1" FontAttributes="Bold" MinimumWidthRequest="90" Margin="0,0,0,5" Clicked="OnGameClicked" HorizontalOptions="Center" Grid.Row="2" />
                             </Grid>
                         </Frame>
                     </DataTemplate>

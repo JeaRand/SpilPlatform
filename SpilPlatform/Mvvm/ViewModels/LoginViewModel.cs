@@ -1,19 +1,24 @@
-﻿using SpilPlatform.Mvvm.Models;
-using SpilPlatform.Mvvm.Views;
+﻿using Microsoft.Identity.Client;
+using SpilPlatform.Mvvm.Models;
+using SpilPlatform.Services;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows.Input;
-using SpilPlatform.Services;
 
 namespace SpilPlatform.Mvvm.ViewModels
 {
     public class LoginViewModel : INotifyPropertyChanged
     {
-        private UserDataService userDataService;
+        private readonly SessionManagementService sessionManagementService;
+        private readonly UserDataService userDataService;
+
         private string username;
         private string password;
         private bool isAuthenticated;
 
+        
         public string Username
         {
             get => username;
@@ -21,10 +26,10 @@ namespace SpilPlatform.Mvvm.ViewModels
             {
                 username = value;
                 OnPropertyChanged();
-                ((Command)AuthenticateCommand).ChangeCanExecute(); // Opdater knappens tilstand, når brugernavnet ændres.
+                ((Command)AuthenticateCommand).ChangeCanExecute(); // Update the button state when the username changes.
             }
         }
-
+        
         public string Password
         {
             get => password;
@@ -32,7 +37,7 @@ namespace SpilPlatform.Mvvm.ViewModels
             {
                 password = value;
                 OnPropertyChanged();
-                ((Command)AuthenticateCommand).ChangeCanExecute(); // Opdater knappens tilstand, når adgangskoden ændres.
+                ((Command)AuthenticateCommand).ChangeCanExecute(); // Update the button state when the password changes.
             }
         }
 
@@ -46,48 +51,44 @@ namespace SpilPlatform.Mvvm.ViewModels
             }
         }
 
-        public ICommand AuthenticateCommand => new Command(Authenticate, CanLogin);
+        public ICommand AuthenticateCommand { get; }
 
-        public LoginViewModel()
+        public LoginViewModel(SessionManagementService sessionManagementService, UserDataService userDataService)
         {
-            userDataService = new UserDataService();
-            // Initialiser eventuelle yderligere egenskaber her, hvis det er nødvendigt.
+            this.sessionManagementService = sessionManagementService;
+            this.userDataService = userDataService;
+            AuthenticateCommand = new Command(async () => await Authenticate(), CanLogin);
         }
 
-        /// <summary>
-        /// Bestemmer, om brugeren kan logge ind baseret på indtastet brugernavn og adgangskode.
-        /// </summary>
         public bool CanLogin()
         {
-            // Tjek om både brugernavn og adgangskode er udfyldt.
             return !string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password);
         }
 
-        /// <summary>
-        /// Forsøger at godkende brugeren ved at sammenligne brugernavn og adgangskode med superbrugeroplysninger.
-        /// </summary>
-        public async void Authenticate()
+        public async Task Authenticate()
         {
             try
             {
-                var users = await userDataService.LoadUsersAsync(); // Method to load all users
+                var users = await userDataService.LoadUsersAsync();
                 var user = users.FirstOrDefault(u => u.Username == Username);
 
-                if (user != null && userDataService.VerifyPassword(Password, user.PasswordHash))
+                if (user != null && UserDataService.VerifyPassword(Password, user.PasswordHash))
                 {
                     IsAuthenticated = true;
+                    sessionManagementService.LogIn(user);
                     // Proceed with authenticated user
                 }
                 else
                 {
                     IsAuthenticated = false;
+                    System.Diagnostics.Debug.WriteLine("Could not authenticate - User and password combination doesn't exist");
                     // Handle authentication failure (e.g., show error message)
                 }
             }
             catch (Exception ex)
             {
-                // Handle exceptions (e.g., log error, show error message)
                 IsAuthenticated = false;
+                System.Diagnostics.Debug.WriteLine(ex.Message);
             }
         }
 

@@ -10,7 +10,13 @@ namespace SpilPlatform.Mvvm.Views
         public LoginView()
         {
             InitializeComponent();
-            loginViewModel = new LoginViewModel();
+            loginViewModel = App.ServiceProvider.GetService<LoginViewModel>();
+
+            if (loginViewModel == null)
+            {
+                throw new InvalidOperationException("LoginViewModel not found. Ensure it's registered with DI container.");
+            }
+
             BindingContext = loginViewModel;
         }
 
@@ -18,7 +24,7 @@ namespace SpilPlatform.Mvvm.Views
         {
             if (loginViewModel.CanLogin()) // Kontroller, om login er tilladt baseret på LoginViewModel
             {
-                loginViewModel.Authenticate(); // Udfør autentifikation
+                await loginViewModel.Authenticate(); // Udfør autentifikation
                 if (loginViewModel.IsAuthenticated)
                 {
                     await Navigation.PushAsync(new FrontPageView()); // Naviger til næste visning ved vellykket login
@@ -41,9 +47,5 @@ namespace SpilPlatform.Mvvm.Views
             // Navigate back to the previous page
             await Navigation.PopAsync();
         }
-
-
     }
 }
-
-

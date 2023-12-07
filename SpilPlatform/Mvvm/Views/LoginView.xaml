@@ -21,7 +21,7 @@
                 FontFamily="Overskrift"
                 FontSize="26"
                 HorizontalTextAlignment="Center"
-                Text="Log ind for at vælge hvilke spil som skal vises op forsiden!"
+                Text="Log ind for at ændre i indstillingerne"
                 TextColor="White" />
             <Entry
                 Margin="0,50,0,20"

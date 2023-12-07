@@ -13,10 +13,9 @@ public partial class GameView : ContentPage
         InitializeComponent();
         BindingContext = new GameViewModel();
     }
+
     private async void OnBackButtonClicked(object sender, EventArgs e)
     {
         await Navigation.PopAsync();
     }
-
-
 }

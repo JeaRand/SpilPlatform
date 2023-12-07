@@ -6,31 +6,33 @@ namespace SpilPlatform
 {
     public partial class App : Application
     {
-        public App()
+        public static IServiceProvider ServiceProvider { get; private set; }    
+        public App(IServiceProvider serviceProvider)
         {
             InitializeComponent();
+            ServiceProvider = serviceProvider;
             InitializeAppDataAsync();
         }
-        private async void InitializeAppDataAsync()
+        private void InitializeAppDataAsync()
         {
-            UserDataService userDataService = new UserDataService();
+            UserDataService userDataService = new();
 
             if (DeviceInfo.Platform == DevicePlatform.WinUI)
             {
                 userDataService.UserDataFileCheck();
                 if (!userDataService.CheckAdminExists())
                 {
-                    MainPage = new RegistrationView(); // Navigate to RegistrationView
+                    MainPage = new NavigationPage(new RegistrationView()); // Navigate to RegistrationView
                 }
                 else
                 {
-                    MainPage = new FrontPageView(); // An admin exists so app will start normally at the frontpage
+                    MainPage = new NavigationPage(new FrontPageView()); // An admin exists so app will start normally at the frontpage
                 }
             }
 
             else
             {
-                MainPage = new FrontPageView();
+                MainPage = new NavigationPage(new FrontPageView());
             }
         }
     }

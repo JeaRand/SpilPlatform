@@ -1,4 +1,8 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using SpilPlatform.Services;
+using SpilPlatform.Mvvm.ViewModels;
+using SpilPlatform.Mvvm.Views;
 
 namespace SpilPlatform
 {
@@ -19,8 +23,15 @@ namespace SpilPlatform
                 });
 
 #if DEBUG
-		builder.Logging.AddDebug();
+		    builder.Logging.AddDebug();
 #endif
+
+            // Register singletons
+            builder.Services.AddSingleton<GameDataService>();
+            builder.Services.AddSingleton<UserDataService>();
+            builder.Services.AddSingleton<SessionManagementService>();
+            builder.Services.AddTransient<AggregationViewModel>();
+            builder.Services.AddTransient<LoginViewModel>();
 
             return builder.Build();
         }

@@ -17,6 +17,8 @@ public partial class RegistrationView : ContentPage
             if (vm.CanRegister())
             {
                 vm.RegisterUser();
+
+                await Navigation.PushAsync(new FrontPageView());
             }
             else
             {

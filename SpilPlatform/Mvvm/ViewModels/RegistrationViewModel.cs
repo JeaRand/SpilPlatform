@@ -62,7 +62,7 @@ namespace SpilPlatform.Mvvm.ViewModels
             }
             else
             {
-                User newUser = new User
+                User newUser = new()
                 {
                     Username = username,
                     IsAdmin = true
