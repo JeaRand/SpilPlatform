@@ -11,16 +11,16 @@ namespace SpilPlatform.Mvvm.ViewModels
 {
     public class CategoryViewModel : INotifyPropertyChanged
     {
-        public ObservableCollection<GameCategory> Categories { get; set; }
+        public ObservableCollection<Category> Categories { get; set; }
 
         public CategoryViewModel()
         {
-            Categories = new ObservableCollection<GameCategory>
+            Categories = new ObservableCollection<Category>
         {
-            new GameCategory("0.-1. klasse"),
-            new GameCategory("2.-3. klasse"),
-            new GameCategory("4.-5. klasse"),
-            new GameCategory("6.+ klasse")
+            new Category("0.-1. klasse"),
+            new Category("2.-3. klasse"),
+            new Category("4.-5. klasse"),
+            new Category("6.+ klasse")
         };
         }
 

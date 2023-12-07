@@ -6,7 +6,7 @@ public partial class SettingsView : ContentPage
 {
     private readonly IServiceProvider _serviceProvider;
 
-    public SettingsView()
+    public SettingsView(IServiceProvider serviceProvider)
 	{
         InitializeComponent();
         _serviceProvider = serviceProvider;

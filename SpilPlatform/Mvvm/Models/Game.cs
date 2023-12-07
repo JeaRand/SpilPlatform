@@ -13,6 +13,6 @@ namespace SpilPlatform.Mvvm.Models
         public string Description { get; set; }
         public Image Icon { get; set; }
         public string Link { get; set; }
-        public GameCategory[] GameCategories { get; set; }
+        public Category[] Categories { get; set; }
     }
 }

@@ -117,7 +117,7 @@
 
 
             <!-- Game tiles view -->
-            <CollectionView Margin="0,20,0,0">
+            <CollectionView ItemsSource="{Binding GamesViewModel.Games}" Margin="0,20,0,0">
                 <CollectionView.ItemsLayout>
                     <!-- Use 'Span' to determine the number of columns based on device width -->
                     <GridItemsLayout Orientation="Vertical" Span="{OnIdiom Phone=1, Tablet=2, Desktop=4}" VerticalItemSpacing="10" HorizontalItemSpacing="20"/>
@@ -132,20 +132,15 @@
                                     <RowDefinition Height="2*"/>
                                     <!-- Game image -->
                                     <RowDefinition Height="Auto"/>
-                                    <!-- Play button, ensure it's always visible -->
+                                    <!-- Play button -->
                                 </Grid.RowDefinitions>
+
                                 <!-- Game name label -->
-                                <Label Text="{Binding .}"
-                                       VerticalOptions="Start"
-                                       HorizontalOptions="CenterAndExpand"
-                                       Opacity="0.9"
-                                       TextColor="White" 
-                                       Padding="5"
-                                       FontAttributes="Bold"
-                                       Grid.Row="0" />
+                                <Label Text="{Binding Title}" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" Opacity="0.9" TextColor="White" Padding="5" FontAttributes="Bold" Grid.Row="0" />
 
                                 <!-- Game image location -->
-                                <Image Source="pussle_spil.png" Aspect="AspectFill" Grid.Row="1"/>
+                                <!-- Ensure your image source binding is correct -->
+                                <Image Source="{Binding ImageSource}" Aspect="AspectFill" Grid.Row="1"/>
 
                                 <!-- Play button -->
                                 <Button Text="Play" MinimumHeightRequest="50" Style="{StaticResource ButtonBackgroundColor}" TextColor="Black" BorderColor="Black" BorderWidth="1" FontAttributes="Bold" MinimumWidthRequest="90" Margin="0,0,0,5" Clicked="OnGameClicked" HorizontalOptions="Center" Grid.Row="2"/>
@@ -153,21 +148,6 @@
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
-
-                <!-- Example game list not fully implemented, just an example -->
-                <CollectionView.ItemsSource>
-                    <x:Array Type="{x:Type x:String}">
-                        <x:String>Game 1</x:String>
-                        <x:String>Game 2</x:String>
-                        <x:String>Game 3</x:String>
-                        <x:String>Game 4</x:String>
-                        <x:String>Game 5</x:String>
-                        <x:String>Game 6</x:String>
-                        <x:String>Game 7</x:String>
-                        <x:String>Game 8</x:String>
-                        <x:String>Game 9</x:String>
-                    </x:Array>
-                </CollectionView.ItemsSource>
             </CollectionView>
 
         </StackLayout>

@@ -21,11 +21,10 @@ namespace SpilPlatform.Mvvm.Views
         {
             try
             {
-                //if (BindingContext is AggregationViewModel aggregationViewModel)
-                //{
-                //    aggregationViewModel.GamesViewModel.Games
-                //    await Navigation.PushAsync(new GameView(_serviceProvider, ));
-                //}
+                if (sender is Button button && button.BindingContext is Game selectedGame)
+                {
+                    await Navigation.PushAsync(new GameView(_serviceProvider, selectedGame.Id));
+                }
             }
             catch (Exception ex)
             {
@@ -66,7 +65,7 @@ namespace SpilPlatform.Mvvm.Views
         {
             try
             {
-                await Navigation.PushAsync(new SettingsView());
+                await Navigation.PushAsync(new SettingsView(_serviceProvider));
             }
             catch (Exception ex)
             {

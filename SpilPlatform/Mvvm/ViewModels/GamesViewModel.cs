@@ -3,11 +3,12 @@ using SpilPlatform.Services;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace SpilPlatform.Mvvm.ViewModels
 {
-    public class GamesViewModel: INotifyPropertyChanged
+    public class GamesViewModel : INotifyPropertyChanged
     {
         private readonly IServiceProvider _serviceProvider;
         public ObservableCollection<Game> Games { get; private set; }
@@ -45,7 +46,7 @@ namespace SpilPlatform.Mvvm.ViewModels
             }
         }
 
-        protected virtual void OnPropertyChanged(string propertyName)
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
