@@ -11,14 +11,12 @@ namespace SpilPlatform.Mvvm.ViewModels
 {
     public class LoginViewModel : INotifyPropertyChanged
     {
-        private readonly SessionManagementService sessionManagementService;
-        private readonly UserDataService userDataService;
+        private readonly IServiceProvider _serviceProvider;
 
         private string username;
         private string password;
         private bool isAuthenticated;
 
-        
         public string Username
         {
             get => username;
@@ -53,10 +51,9 @@ namespace SpilPlatform.Mvvm.ViewModels
 
         public ICommand AuthenticateCommand { get; }
 
-        public LoginViewModel(SessionManagementService sessionManagementService, UserDataService userDataService)
+        public LoginViewModel(IServiceProvider serviceProvider)
         {
-            this.sessionManagementService = sessionManagementService;
-            this.userDataService = userDataService;
+            _serviceProvider = serviceProvider;
             AuthenticateCommand = new Command(async () => await Authenticate(), CanLogin);
         }
 
@@ -69,6 +66,9 @@ namespace SpilPlatform.Mvvm.ViewModels
         {
             try
             {
+                var sessionManagementService = _serviceProvider.GetService<SessionManagementService>();
+                var userDataService = _serviceProvider.GetService<UserDataService>();
+
                 var users = await userDataService.LoadUsersAsync();
                 var user = users.FirstOrDefault(u => u.Username == Username);
 

@@ -8,12 +8,14 @@ using System.Threading.Tasks;
 using SpilPlatform.Services;
 using System.Windows.Input;
 using SpilPlatform.Mvvm.Models;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace SpilPlatform.Mvvm.ViewModels
 {
     public class RegistrationViewModel : INotifyPropertyChanged
     {
-        private readonly UserDataService userDataService = new();
+        private readonly IServiceProvider _serviceProvider;
+
         private string username;
         private string password;
         private string confirmPassword;
@@ -39,8 +41,9 @@ namespace SpilPlatform.Mvvm.ViewModels
 
         public ICommand RegisterCommand { get; }
 
-        public RegistrationViewModel()
+        public RegistrationViewModel(IServiceProvider serviceProvider)
         {
+            _serviceProvider = serviceProvider;
             RegisterCommand = new Command(RegisterUser, CanRegister);
         }
 
@@ -54,7 +57,7 @@ namespace SpilPlatform.Mvvm.ViewModels
 
         public async void RegisterUser()
         {
-            var users = await userDataService.LoadUsersAsync();
+            var users = await _serviceProvider.GetService<UserDataService>().LoadUsersAsync();
 
             if (users.Any(x => x.Username == username))
             {
@@ -68,7 +71,7 @@ namespace SpilPlatform.Mvvm.ViewModels
                     IsAdmin = true
                 };
                 
-                await userDataService.SaveUserDataAsync(newUser, password);
+                await _serviceProvider.GetService<UserDataService>().SaveUserDataAsync(newUser, password);
             }
         }
 

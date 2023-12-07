@@ -9,17 +9,23 @@ namespace SpilPlatform.Mvvm.Views
 {
     public partial class FrontPageView : ContentPage
     {
-        public FrontPageView()
+        private readonly IServiceProvider _serviceProvider;
+        public FrontPageView(IServiceProvider serviceProvider)
         {
             InitializeComponent();
-            BindingContext = App.ServiceProvider.GetService<AggregationViewModel>();
+            _serviceProvider = serviceProvider;
+            BindingContext = new AggregationViewModel(serviceProvider);
         }
 
         private async void OnGameClicked(object sender, EventArgs e)
         {
             try
             {
-                await Navigation.PushAsync(new GameView());
+                //if (BindingContext is AggregationViewModel aggregationViewModel)
+                //{
+                //    aggregationViewModel.GamesViewModel.Games
+                //    await Navigation.PushAsync(new GameView(_serviceProvider, ));
+                //}
             }
             catch (Exception ex)
             {
@@ -31,7 +37,7 @@ namespace SpilPlatform.Mvvm.Views
         {
             try
             {
-                await Navigation.PushAsync(new LoginView());
+                await Navigation.PushAsync(new LoginView(_serviceProvider));
             }
             catch (Exception ex)
             {
@@ -68,9 +74,9 @@ namespace SpilPlatform.Mvvm.Views
             }
         }
 
-        void OnPuzzleCategoryClicked(object sender, EventArgs e)
-        {
-            Navigation.PushAsync(new GameView());
-        }
+        //void OnGameCategoryClicked(object sender, EventArgs e)
+        //{
+        //    Navigation.PushAsync(new GameView(_serviceProvider));
+        //}
     }
 }

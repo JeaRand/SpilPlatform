@@ -36,7 +36,6 @@ namespace SpilPlatform.Services
                     // Create the file with an empty JSON array
                     File.WriteAllText(filePath, "[]");
                     System.Diagnostics.Debug.WriteLine($"File Path: {filePath}");
-
                 }
             }
             catch (Exception ex)
@@ -47,10 +46,7 @@ namespace SpilPlatform.Services
 
         public async Task<List<User>> LoadUsersAsync()
         {
-            if (!File.Exists(filePath))
-            {
-                return new List<User>(); // Return an empty list if the file doesn't exist
-            }
+            UserDataFileCheck();
 
             using (var streamReader = new StreamReader(filePath))
             {
@@ -66,6 +62,7 @@ namespace SpilPlatform.Services
 
             // Add the new user to the list
             user.PasswordHash = HashPassword(password);
+            user.Id = Guid.NewGuid();
             users.Add(user);
 
             var userData = JsonConvert.SerializeObject(users);

@@ -8,11 +8,11 @@ namespace SpilPlatform.Mvvm.Models
 {
     public class Game
     {
-        public int GameId { get; set; }
+        public Guid Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public long Icon { get; set; }
+        public Image Icon { get; set; }
         public string Link { get; set; }
-        public string Category { get; set; }
+        public GameCategory[] GameCategories { get; set; }
     }
 }

@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class Category
+public class GameCategory
 {
     public string Name { get; set; }
 
-    public Category(string name)
+    public GameCategory(string name)
     {
         Name = name;
     }

@@ -12,26 +12,43 @@ namespace SpilPlatform.Mvvm.Views
 {
     public class AggregationViewModel : INotifyPropertyChanged
     {
-        private readonly SessionManagementService sessionManagementService;
+        private readonly IServiceProvider _serviceProvider;
 
-        public GameViewModel GameViewModel { get; set; }
+        public GamesViewModel GamesViewModel { get; set; }
         public CategoryViewModel CategoryViewModel { get; set; }
 
-        public bool IsUserLoggedIn => sessionManagementService.IsUserLoggedIn;
-        public bool IsLoggedInUserAdmin => sessionManagementService.IsLoggedInUserAdmin();
-
-        public AggregationViewModel(SessionManagementService sessionManagementService)
+        public bool IsUserLoggedIn
         {
-            this.sessionManagementService = sessionManagementService;
-            GameViewModel = new GameViewModel();
+            get
+            {
+                var sessionManagementService = _serviceProvider.GetService<SessionManagementService>();
+                return sessionManagementService.IsUserLoggedIn;
+            }
+        }
+
+        public bool IsLoggedInUserAdmin
+        {
+            get
+            {
+                var sessionManagementService = _serviceProvider.GetService<SessionManagementService>();
+                return sessionManagementService.IsLoggedInUserAdmin();
+            }
+        }
+
+        public AggregationViewModel(IServiceProvider serviceProvider)
+        {
+            _serviceProvider = serviceProvider;
+            GamesViewModel = new GamesViewModel(serviceProvider);
             CategoryViewModel = new CategoryViewModel();
 
             // Subscribe to PropertyChanged event of sessionManagementService
+            var sessionManagementService = _serviceProvider.GetService<SessionManagementService>();
             sessionManagementService.PropertyChanged += OnSessionServicePropertyChanged;
         }
 
         public void LogoutUser()
         {
+            var sessionManagementService = _serviceProvider.GetService<SessionManagementService>();
             sessionManagementService.LogOut();
         }
 

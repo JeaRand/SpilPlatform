@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SpilPlatform.Mvvm.Views.GameView"
              Title="GameView">
-    
+
     <!-- Baggrund med gradient effekt -->
     <ContentPage.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
@@ -11,7 +11,7 @@
             <GradientStop Color="#333333" Offset="1.0"/>
         </LinearGradientBrush>
     </ContentPage.Background>
-    
+
     <ScrollView>
         <VerticalStackLayout>
             <WebView Source="https://i.simmer.io/@Leaske/mossgame" WidthRequest="1280" HeightRequest="800" Margin="0,50,0,0" />

@@ -5,40 +5,41 @@ namespace SpilPlatform.Mvvm.Views
 {
     public partial class LoginView : ContentPage
     {
-        private readonly LoginViewModel loginViewModel;
+        private readonly IServiceProvider _serviceProvider;
 
-        public LoginView()
+        public LoginView(IServiceProvider serviceProvider)
         {
             InitializeComponent();
-            loginViewModel = App.ServiceProvider.GetService<LoginViewModel>();
-
-            if (loginViewModel == null)
-            {
-                throw new InvalidOperationException("LoginViewModel not found. Ensure it's registered with DI container.");
-            }
-
-            BindingContext = loginViewModel;
+            _serviceProvider = serviceProvider;
+            BindingContext = new LoginViewModel(serviceProvider);
         }
 
         private async void LoginButton_Clicked(object sender, EventArgs e)
         {
-            if (loginViewModel.CanLogin()) // Kontroller, om login er tilladt baseret på LoginViewModel
+            if (BindingContext is LoginViewModel loginViewModel)
             {
-                await loginViewModel.Authenticate(); // Udfør autentifikation
-                if (loginViewModel.IsAuthenticated)
+                if (loginViewModel.CanLogin()) // Kontroller, om login er tilladt baseret på LoginViewModel
                 {
-                    await Navigation.PushAsync(new FrontPageView()); // Naviger til næste visning ved vellykket login
+                    await loginViewModel.Authenticate(); // Udfør autentifikation
+                    if (loginViewModel.IsAuthenticated)
+                    {
+                        await Navigation.PushAsync(new FrontPageView(_serviceProvider)); // Naviger til næste visning ved vellykket login
+                    }
+                    else
+                    {
+                        // Håndter fejl ved login, f.eks. vise en besked til brugeren
+                        await DisplayAlert("Fejl", "Forkert brugernavn eller adgangskode. Prøv igen.", "OK");
+                    }
                 }
                 else
                 {
-                    // Håndter fejl ved login, f.eks. vise en besked til brugeren
-                    await DisplayAlert("Fejl", "Forkert brugernavn eller adgangskode. Prøv igen.", "OK");
+                    // Håndter tilfælde, hvor login ikke er tilladt (felter ikke udfyldt)
+                    await DisplayAlert("Advarsel", "Du skal udfylde både brugernavn og adgangskode for at logge ind.", "OK");
                 }
             }
             else
             {
-                // Håndter tilfælde, hvor login ikke er tilladt (felter ikke udfyldt)
-                await DisplayAlert("Advarsel", "Du skal udfylde både brugernavn og adgangskode for at logge ind.", "OK");
+                System.Diagnostics.Debug.WriteLine("LoginButton condition failed");
             }
         }
         // Event handler for the Back button

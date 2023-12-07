@@ -1,51 +1,40 @@
-﻿using SpilPlatform.Mvvm.Models;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
-
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using SpilPlatform.Mvvm.Models;
+using SpilPlatform.Services;
 
 namespace SpilPlatform.Mvvm.ViewModels
 {
-    public class GameViewModel : INotifyPropertyChanged
+    public class GameViewModel: INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
+        private readonly IServiceProvider _serviceProvider;
         private Game game;
         public Game Game
         {
-            get { return game; }
+            get => game;
             set
             {
-                if (game != value)
-                {
-                    game = value;
-                    OnPropertyChanged(nameof(Game));
-                }
+                game = value;
+                OnPropertyChanged(nameof(Game));
             }
         }
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        private string searchText;
-        public string SearchText
+        public GameViewModel(IServiceProvider serviceProvider, Guid gameId)
         {
-            get { return searchText; }
-            set
-            {
-                if (searchText != value)
-                {
-                    searchText = value;
-                    OnPropertyChanged(nameof(SearchText));
-                }
-            }
+            _serviceProvider = serviceProvider;
+            LoadGame(gameId);
         }
 
-        public GameViewModel()
+        private async void LoadGame(Guid gameId)
         {
-            Game = new Game
-            {
-                Title = "Pusslespil",
-                Description = "Pusslespil hvor du kan lære mere om de forskellige Møller i Danmark",
-                Link = "https://simmer.io/@Leaske/mossgame",
-            };
-    
+            var gameDataService = _serviceProvider.GetService<GameDataService>();
+            var games = await gameDataService.LoadGamesAsync();
+            Game = games.FirstOrDefault(Game => Game.Id == gameId);
         }
 
         protected virtual void OnPropertyChanged(string propertyName)

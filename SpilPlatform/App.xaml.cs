@@ -15,24 +15,27 @@ namespace SpilPlatform
         }
         private void InitializeAppDataAsync()
         {
-            UserDataService userDataService = new();
+            var userDataService = ServiceProvider.GetService<UserDataService>();
+            var gameDataService = ServiceProvider.GetService<GameDataService>();
 
             if (DeviceInfo.Platform == DevicePlatform.WinUI)
             {
                 userDataService.UserDataFileCheck();
+                gameDataService.GameDataFileCheck();
+
                 if (!userDataService.CheckAdminExists())
                 {
-                    MainPage = new NavigationPage(new RegistrationView()); // Navigate to RegistrationView
+                    MainPage = new NavigationPage(new RegistrationView(ServiceProvider)); // Navigate to RegistrationView
                 }
                 else
                 {
-                    MainPage = new NavigationPage(new FrontPageView()); // An admin exists so app will start normally at the frontpage
+                    MainPage = new NavigationPage(new FrontPageView(ServiceProvider)); // An admin exists so app will start normally at the frontpage
                 }
             }
 
             else
             {
-                MainPage = new NavigationPage(new FrontPageView());
+                MainPage = new NavigationPage(new FrontPageView(ServiceProvider));
             }
         }
     }

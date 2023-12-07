@@ -136,19 +136,19 @@
                                 </Grid.RowDefinitions>
                                 <!-- Game name label -->
                                 <Label Text="{Binding .}"
-                           VerticalOptions="Start"
-                           HorizontalOptions="CenterAndExpand"
-                           Opacity="0.9"
-                           TextColor="White" 
-                           Padding="5"
-                           FontAttributes="Bold"
-                           Grid.Row="0" />
+                                       VerticalOptions="Start"
+                                       HorizontalOptions="CenterAndExpand"
+                                       Opacity="0.9"
+                                       TextColor="White" 
+                                       Padding="5"
+                                       FontAttributes="Bold"
+                                       Grid.Row="0" />
 
                                 <!-- Game image location -->
-                                <Image Source="pussle_spil.png" Aspect="AspectFill" Grid.Row="1" />
+                                <Image Source="pussle_spil.png" Aspect="AspectFill" Grid.Row="1"/>
 
                                 <!-- Play button -->
-                                <Button Text="Play" MinimumHeightRequest="50" Style="{StaticResource ButtonBackgroundColor}" TextColor="Black" BorderColor="Black" BorderWidth="1" FontAttributes="Bold" MinimumWidthRequest="90" Margin="0,0,0,5" Clicked="OnGameClicked" HorizontalOptions="Center" Grid.Row="2" />
+                                <Button Text="Play" MinimumHeightRequest="50" Style="{StaticResource ButtonBackgroundColor}" TextColor="Black" BorderColor="Black" BorderWidth="1" FontAttributes="Bold" MinimumWidthRequest="90" Margin="0,0,0,5" Clicked="OnGameClicked" HorizontalOptions="Center" Grid.Row="2"/>
                             </Grid>
                         </Frame>
                     </DataTemplate>
