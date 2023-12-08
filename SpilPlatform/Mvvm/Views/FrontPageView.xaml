@@ -2,6 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:converters="clr-namespace:SpilPlatform.Converters"
              x:Class="SpilPlatform.Mvvm.Views.FrontPageView"
+             x:Name="FrontPage"
              Title="FrontPageView">
 
     <ContentPage.Resources>
@@ -46,6 +47,22 @@
                     <!-- Buttons container -->
                     <StackLayout Orientation="Horizontal" Grid.Column="2" HorizontalOptions="End" Spacing="10">
 
+                        <!-- Add game Button -->
+                        <Button x:Name="addGameButton"
+                                Text="Tilf&#248;j nyt spil"
+                                Clicked="OnAddGameClicked"
+                                Style="{StaticResource ButtonBackgroundColor}" 
+                                FontAttributes="Bold" 
+                                TextColor="Black" 
+                                Margin="10,0,10,0" 
+                                BorderWidth="1" 
+                                WidthRequest="100" 
+                                HeightRequest="50" 
+                                BorderColor="Black" 
+                                CornerRadius="5" 
+                                Padding="5" 
+                                VerticalOptions="Center" 
+                                IsVisible="{Binding IsLoggedInUserAdmin, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                         <!-- Settings Button -->
                         <Button x:Name="settingsButton"
                                 Text="Indstillinger"
@@ -127,23 +144,37 @@
                         <Frame Padding="10" Style="{StaticResource FrameBackgroundColor}" CornerRadius="15" BorderColor="Black">
                             <Grid RowSpacing="4">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
                                     <!-- Game name label -->
-                                    <RowDefinition Height="2*"/>
-                                    <!-- Game image -->
                                     <RowDefinition Height="Auto"/>
-                                    <!-- Play button -->
+                                    <!-- Game image -->
+                                    <RowDefinition Height="2*"/>
+                                    <!-- Buttons -->
+                                    <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <!-- Play button -->
+                                    <ColumnDefinition Width="*"/>
+                                    <!-- Edit button -->
+                                    <ColumnDefinition Width="*"/>
+                                    <!-- Delete button -->
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
 
                                 <!-- Game name label -->
                                 <Label Text="{Binding Title}" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" Opacity="0.9" TextColor="White" Padding="5" FontAttributes="Bold" Grid.Row="0" />
-
                                 <!-- Game image location -->
+                                <Image Source="{Binding ImageSource}" Grid.Row="1"/>
                                 <!-- Ensure your image source binding is correct -->
                                 <Image Source="{Binding ImageSource}" Aspect="AspectFill" Grid.Row="1"/>
 
                                 <!-- Play button -->
-                                <Button Text="Play" MinimumHeightRequest="50" Style="{StaticResource ButtonBackgroundColor}" TextColor="Black" BorderColor="Black" BorderWidth="1" FontAttributes="Bold" MinimumWidthRequest="90" Margin="0,0,0,5" Clicked="OnGameClicked" HorizontalOptions="Center" Grid.Row="2"/>
+                                <Button x:Name="PlayButton" Text="Spil" MinimumHeightRequest="50" Style="{StaticResource ButtonBackgroundColor}" TextColor="Black" BorderColor="Black" BorderWidth="1" FontAttributes="Bold" MinimumWidthRequest="90" Margin="0,0,0,5" Clicked="OnPlayGameClicked" HorizontalOptions="Center" Grid.Row="2" Grid.Column="0"/>
+                                <!-- Edit button -->
+                                <Button x:Name="EditButton" Text="Rediger" MinimumHeightRequest="50" Style="{StaticResource ButtonBackgroundColor}" TextColor="Black" BorderColor="Black" BorderWidth="1" FontAttributes="Bold" MinimumWidthRequest="90" Margin="0,0,0,5" Clicked="OnEditGameClicked" HorizontalOptions="Center" Grid.Row="2" Grid.Column="1" IsVisible="{Binding Source={x:Reference FrontPage}, Path=BindingContext.IsLoggedInUserAdmin, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                <!-- Delete button -->
+                                <Button x:Name="DeleteButton" Text="Slet" MinimumHeightRequest="50" Style="{StaticResource ButtonBackgroundColor}" TextColor="Black" BorderColor="Black" BorderWidth="1" FontAttributes="Bold" MinimumWidthRequest="90" Margin="0,0,0,5" Clicked="OnDeleteGameClicked" HorizontalOptions="Center" Grid.Row="2" Grid.Column="2" IsVisible="{Binding Source={x:Reference FrontPage}, Path=BindingContext.IsLoggedInUserAdmin, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+
                             </Grid>
                         </Frame>
                     </DataTemplate>

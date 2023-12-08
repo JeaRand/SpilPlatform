@@ -12,22 +12,16 @@ namespace SpilPlatform.Services
     {
         private readonly string filePath = Path.Combine(FileSystem.AppDataDirectory, "gamedata.json");
 
-        public void GameDataFileCheck()
+        public async void GameDataFileCheck()
         {
             try
             {
                 if (!File.Exists(filePath))
                 {
-                    // Create the file with an empty JSON array
-                    File.WriteAllText(filePath, "[]");
-                    System.Diagnostics.Debug.WriteLine($"File Path: {filePath}");
-
                     var seedGames = SeedDataService.Initialize();
                     var seedGameData = JsonConvert.SerializeObject(seedGames);
-                    using (var streamWriter = new StreamWriter(filePath, false))
-                    {
-                        streamWriter.Write(seedGameData);
-                    }
+                    await File.WriteAllTextAsync(filePath, seedGameData);
+                    System.Diagnostics.Debug.WriteLine($"File Path: {filePath}");
                 }
             }
             catch (Exception ex)
@@ -44,7 +38,22 @@ namespace SpilPlatform.Services
             {
                 var gameData = await streamReader.ReadToEndAsync();
                 var games = JsonConvert.DeserializeObject<List<Game>>(gameData);
-                return games ?? new List<Game>(); // Return the list of games or an empty list if null
+                return games ?? new List<Game>();
+            }
+        }
+
+        public async Task DeleteGameDataAsync(Game game)
+        {
+            var games = await LoadGamesAsync();
+            var gameToDelete = games.FirstOrDefault(g => g.Id == game.Id);
+            if (gameToDelete != null)
+            {
+                games.Remove(gameToDelete);
+                var gameData = JsonConvert.SerializeObject(games);
+                using (var streamWriter = new StreamWriter(filePath, false))
+                {
+                    await streamWriter.WriteAsync(gameData);
+                }
             }
         }
 
@@ -52,7 +61,7 @@ namespace SpilPlatform.Services
         {
             var games = await LoadGamesAsync();
 
-            // Add the new game to the list
+            game.Id = Guid.NewGuid();
             games.Add(game);
 
             var gameData = JsonConvert.SerializeObject(games);

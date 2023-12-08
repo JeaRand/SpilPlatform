@@ -11,9 +11,9 @@ namespace SpilPlatform
         {
             InitializeComponent();
             ServiceProvider = serviceProvider;
-            InitializeAppDataAsync();
+            InitializeAppData();
         }
-        private void InitializeAppDataAsync()
+        private void InitializeAppData()
         {
             var userDataService = ServiceProvider.GetService<UserDataService>();
             var gameDataService = ServiceProvider.GetService<GameDataService>();

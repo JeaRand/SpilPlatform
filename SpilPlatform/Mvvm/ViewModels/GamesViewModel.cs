@@ -36,6 +36,14 @@ namespace SpilPlatform.Mvvm.ViewModels
             LoadGames();
         }
 
+        public async void DeleteGame(Game game)
+        {
+            var gameDataService = _serviceProvider.GetService<GameDataService>();
+            await gameDataService.DeleteGameDataAsync(game);
+            Games.Clear();
+            LoadGames();
+        }
+
         private async void LoadGames()
         {
             var gameDataService = _serviceProvider.GetService<GameDataService>();

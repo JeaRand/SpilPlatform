@@ -12,10 +12,11 @@ namespace SpilPlatform.Mvvm.ViewModels
     public class LoginViewModel : INotifyPropertyChanged
     {
         private readonly IServiceProvider _serviceProvider;
+        private TaskCompletionSource<bool> authenticateCompletionSource;
+        private bool isAuthenticated;
 
         private string username;
         private string password;
-        private bool isAuthenticated;
 
         public string Username
         {
@@ -54,15 +55,22 @@ namespace SpilPlatform.Mvvm.ViewModels
         public LoginViewModel(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
-            AuthenticateCommand = new Command(async () => await Authenticate(), CanLogin);
+            AuthenticateCommand = new Command(ExecuteAuthenticateCommand, CanLogin);
         }
 
-        public bool CanLogin()
+        private bool CanLogin()
         {
-            return !string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password);
+            return !string.IsNullOrEmpty(Username) && 
+                   !string.IsNullOrEmpty(Password);
         }
 
-        public async Task Authenticate()
+        private void ExecuteAuthenticateCommand()
+        {
+            authenticateCompletionSource = new TaskCompletionSource<bool>();
+            Authenticate();
+        }
+
+        private async void Authenticate()
         {
             try
             {
@@ -76,20 +84,25 @@ namespace SpilPlatform.Mvvm.ViewModels
                 {
                     IsAuthenticated = true;
                     sessionManagementService.LogIn(user);
-                    // Proceed with authenticated user
                 }
                 else
                 {
                     IsAuthenticated = false;
-                    System.Diagnostics.Debug.WriteLine("Could not authenticate - User and password combination doesn't exist");
-                    // Handle authentication failure (e.g., show error message)
                 }
             }
             catch (Exception ex)
             {
                 IsAuthenticated = false;
-                System.Diagnostics.Debug.WriteLine(ex.Message);
             }
+            finally
+            {
+                authenticateCompletionSource.SetResult(IsAuthenticated);
+            }
+        }
+
+        public Task<bool> WaitForAuthenticationAsync()
+        {
+            return authenticateCompletionSource.Task;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

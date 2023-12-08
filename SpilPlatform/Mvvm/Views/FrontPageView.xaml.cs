@@ -4,6 +4,7 @@ using SpilPlatform.Mvvm.Views;
 using System;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
+using SpilPlatform.Services;
 
 namespace SpilPlatform.Mvvm.Views
 {
@@ -17,7 +18,61 @@ namespace SpilPlatform.Mvvm.Views
             BindingContext = new AggregationViewModel(serviceProvider);
         }
 
-        private async void OnGameClicked(object sender, EventArgs e)
+        private async void OnAddGameClicked(object sender, EventArgs e)
+        {
+            try
+            {
+                if (sender is Button button && button.BindingContext is Game selectedGame)
+                {
+                    await Navigation.PushAsync(new AddGameView(_serviceProvider, selectedGame.Id));
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Navigation error: {ex.Message}");
+            }
+        }
+
+        private async void OnEditGameClicked(object sender, EventArgs e)
+        {
+            try
+            {
+                if (sender is Button button && button.BindingContext is Game selectedGame)
+                {
+                    await Navigation.PushAsync(new EditGameView(_serviceProvider, selectedGame.Id));
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Navigation error: {ex.Message}");
+            }
+        }
+
+        private async void OnDeleteGameClicked(object sender, EventArgs e)
+        {
+            try
+            {
+                if (sender is Button button && button.BindingContext is Game selectedGame)
+                {
+                    bool answer = await DisplayAlert("Bekræft sletning", $"Er du sikker på, at du vil slette {selectedGame.Title}?", "Ja", "Nej");
+                    if (answer)
+                    {
+                        if (BindingContext is AggregationViewModel aggregationViewModel)
+                        {
+                            aggregationViewModel.GamesViewModel.DeleteGame(selectedGame);
+                            await DisplayAlert("Slettet", "Spillet er blevet slettet.", "OK");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error in deleting game: {ex.Message}");
+                await DisplayAlert("Fejl", "Der opstod en fejl under sletningen af spillet.", "OK");
+            }
+        }
+
+        private async void OnPlayGameClicked(object sender, EventArgs e)
         {
             try
             {

@@ -12,12 +12,17 @@ namespace SpilPlatform.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (bool)value ? true : false;
+            if (value is bool booleanValue)
+            {
+                return booleanValue;
+            }
+
+            return false;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (Visibility)value == Visibility.Visible;
+            return (bool)value;
         }
     }
 }
