@@ -13,7 +13,7 @@ namespace SpilPlatform.Services
         {
             var games = new List<Game>
             {
-                new Game {Id = Guid.NewGuid(), Title = "Puslespil", Description = "Puslespil hvor du kan lære mere om forskellige møller rundt omkring i Danmark", Link = "https://simmer.io/@Leaske/mossgame"}
+                new Game {Id = Guid.NewGuid(), Title = "Puslespil", Description = "Puslespil hvor du kan lære mere om forskellige møller rundt omkring i Danmark", Link = "https://i.simmer.io/@Leaske/mossgame"}
             };
             return games;
         }
