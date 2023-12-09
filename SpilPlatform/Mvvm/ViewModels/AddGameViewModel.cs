@@ -80,7 +80,7 @@ namespace SpilPlatform.Mvvm.ViewModels
             return !string.IsNullOrWhiteSpace(Title) &&
                    !string.IsNullOrWhiteSpace(Link);
         }
-        private async Task ExecuteAddGameCommand(object parameter = null)
+        private async Task ExecuteAddGameCommand()
         {
             addGameCompletionSource = new TaskCompletionSource<bool>();
             await AddGame();

@@ -16,10 +16,7 @@ namespace SpilPlatform.Mvvm.Views
             InitializeComponent();
             _serviceProvider = serviceProvider;
 
-            if (BindingContext == null)
-            {
-                BindingContext = new AggregationViewModel(serviceProvider);
-            }
+            BindingContext ??= new AggregationViewModel(serviceProvider);
         }
 
         private async void OnAddGameClicked(object sender, EventArgs e)
@@ -82,7 +79,7 @@ namespace SpilPlatform.Mvvm.Views
             {
                 if (sender is Button button && button.BindingContext is Game selectedGame)
                 {
-                    await Navigation.PushAsync(new GameView(_serviceProvider, selectedGame));
+                    await Navigation.PushAsync(new GameView(selectedGame));
                 }
             }
             catch (Exception ex)

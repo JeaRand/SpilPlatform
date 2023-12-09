@@ -34,12 +34,10 @@ namespace SpilPlatform.Services
         {
             GameDataFileCheck();
 
-            using (var streamReader = new StreamReader(filePath))
-            {
-                var gameData = await streamReader.ReadToEndAsync();
-                var games = JsonConvert.DeserializeObject<List<Game>>(gameData);
-                return games ?? new List<Game>();
-            }
+            using var streamReader = new StreamReader(filePath);
+            var gameData = await streamReader.ReadToEndAsync();
+            var games = JsonConvert.DeserializeObject<List<Game>>(gameData);
+            return games ?? new List<Game>();
         }
 
         public async Task DeleteGameDataAsync(Game game)
@@ -50,10 +48,8 @@ namespace SpilPlatform.Services
             {
                 games.Remove(gameToDelete);
                 var gameData = JsonConvert.SerializeObject(games);
-                using (var streamWriter = new StreamWriter(filePath, false))
-                {
-                    await streamWriter.WriteAsync(gameData);
-                }
+                using var streamWriter = new StreamWriter(filePath, false);
+                await streamWriter.WriteAsync(gameData);
             }
         }
 
@@ -64,10 +60,8 @@ namespace SpilPlatform.Services
             games.Add(game);
 
             var gameData = JsonConvert.SerializeObject(games);
-            using (var streamWriter = new StreamWriter(filePath, false))
-            {
-                await streamWriter.WriteAsync(gameData);
-            }
+            using var streamWriter = new StreamWriter(filePath, false);
+            await streamWriter.WriteAsync(gameData);
         }
     }
 }

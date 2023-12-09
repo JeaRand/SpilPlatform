@@ -91,13 +91,18 @@ namespace SpilPlatform.Mvvm.ViewModels
             OriginalCategoriesDisplay = new ObservableCollection<Category>();
             LoadCategories();
             System.Diagnostics.Debug.WriteLine($"{originalGame.Title}, {originalGame.Description}");
-            UpdateGameCommand = new Command(async () => await UpdateGame(), CanUpdate);
+            UpdateGameCommand = new Command(async () => await ExecuteUpdateGameCommand(), CanUpdate);
         }
 
         private bool CanUpdate()
         {
             return !string.IsNullOrWhiteSpace(NewTitle) &&
                    !string.IsNullOrWhiteSpace(NewLink);
+        }
+        private async Task ExecuteUpdateGameCommand()
+        {
+            editGameCompletionSource = new TaskCompletionSource<bool>();
+            await UpdateGame();
         }
 
         private async Task UpdateGame()

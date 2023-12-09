@@ -93,6 +93,7 @@ namespace SpilPlatform.Mvvm.ViewModels
             catch (Exception ex)
             {
                 IsAuthenticated = false;
+                System.Diagnostics.Debug.WriteLine(ex);
             }
             finally
             {

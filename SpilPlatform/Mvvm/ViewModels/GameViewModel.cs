@@ -12,7 +12,6 @@ namespace SpilPlatform.Mvvm.ViewModels
 {
     public class GameViewModel : INotifyPropertyChanged
     {
-        private readonly IServiceProvider _serviceProvider;
         private Game game;
         public Game Game
         {
@@ -25,9 +24,8 @@ namespace SpilPlatform.Mvvm.ViewModels
         }
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public GameViewModel(IServiceProvider serviceProvider, Game game)
+        public GameViewModel(Game game)
         {
-            _serviceProvider = serviceProvider;
             Game = game;
         }
 

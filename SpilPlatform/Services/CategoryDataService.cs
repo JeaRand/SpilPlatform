@@ -35,12 +35,10 @@ namespace SpilPlatform.Services
         {
             CategoryDataFileCheck();
 
-            using (var streamReader = new StreamReader(filePath))
-            {
-                var categoryData = await streamReader.ReadToEndAsync();
-                var categories = JsonConvert.DeserializeObject<List<Category>>(categoryData);
-                return categories ?? new List<Category>();
-            }
+            using var streamReader = new StreamReader(filePath);
+            var categoryData = await streamReader.ReadToEndAsync();
+            var categories = JsonConvert.DeserializeObject<List<Category>>(categoryData);
+            return categories ?? new List<Category>();
         }
 
         public async Task DeleteCategoryDataAsync(Category category)
@@ -51,10 +49,8 @@ namespace SpilPlatform.Services
             {
                 categories.Remove(categoryToDelete);
                 var categoryData = JsonConvert.SerializeObject(categories);
-                using (var streamWriter = new StreamWriter(filePath, false))
-                {
-                    await streamWriter.WriteAsync(categoryData);
-                }
+                using var streamWriter = new StreamWriter(filePath, false);
+                await streamWriter.WriteAsync(categoryData);
             }
         }
 
@@ -65,10 +61,8 @@ namespace SpilPlatform.Services
             categories.Add(category);
 
             var categoryData = JsonConvert.SerializeObject(categories);
-            using (var streamWriter = new StreamWriter(filePath, false))
-            {
-                await streamWriter.WriteAsync(categoryData);
-            }
+            using var streamWriter = new StreamWriter(filePath, false);
+            await streamWriter.WriteAsync(categoryData);
         }
     }
 }

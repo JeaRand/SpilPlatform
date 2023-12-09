@@ -9,13 +9,10 @@ namespace SpilPlatform.Mvvm.Views;
 
 public partial class GameView : ContentPage
 {
-    private readonly IServiceProvider _serviceProvider;
-
-    public GameView(IServiceProvider serviceProvider, Game game)
+    public GameView(Game game)
     {
         InitializeComponent();
-        _serviceProvider = serviceProvider;
-        BindingContext = new GameViewModel(serviceProvider, game);
+        BindingContext = new GameViewModel(game);
     }
 
     private async void OnBackButtonClicked(object sender, EventArgs e)
