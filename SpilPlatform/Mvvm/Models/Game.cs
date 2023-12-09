@@ -14,5 +14,10 @@ namespace SpilPlatform.Mvvm.Models
         public long IconFileName { get; set; }
         public string Link { get; set; }
         public Category[] Categories { get; set; }
+
+        public Game()
+        {
+            Id = Guid.NewGuid();
+        }
     }
 }

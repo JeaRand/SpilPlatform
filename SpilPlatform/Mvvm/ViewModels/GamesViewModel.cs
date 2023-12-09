@@ -11,7 +11,7 @@ namespace SpilPlatform.Mvvm.ViewModels
     public class GamesViewModel : INotifyPropertyChanged
     {
         private readonly IServiceProvider _serviceProvider;
-        public ObservableCollection<Game> Games { get; private set; }
+        public ObservableCollection<Game> Games { get; private set; } = new ObservableCollection<Game>();
         private string searchText;
 
         public string SearchText
@@ -33,21 +33,26 @@ namespace SpilPlatform.Mvvm.ViewModels
         {
             _serviceProvider = serviceProvider;
             Games = new ObservableCollection<Game>();
-            LoadGames();
         }
 
-        public async void DeleteGame(Game game)
+        public async Task InitializeAsync()
+        {
+            await LoadGamesAsync();
+        }
+
+        public async void DeleteGameAsync(Game game)
         {
             var gameDataService = _serviceProvider.GetService<GameDataService>();
             await gameDataService.DeleteGameDataAsync(game);
-            Games.Clear();
-            LoadGames();
+            await InitializeAsync();
         }
 
-        private async void LoadGames()
+       
+        private async Task LoadGamesAsync()
         {
             var gameDataService = _serviceProvider.GetService<GameDataService>();
             var games = await gameDataService.LoadGamesAsync();
+            Games.Clear();
             foreach (var game in games)
             {
                 Games.Add(game);

@@ -11,14 +11,14 @@ public partial class EditGameView : ContentPage
 {
     private readonly IServiceProvider _serviceProvider;
 
-    public EditGameView(IServiceProvider serviceProvider, Guid gameId)
+    public EditGameView(IServiceProvider serviceProvider, Game game)
 	{
 		InitializeComponent();
         _serviceProvider = serviceProvider;
-        BindingContext = new EditGameViewModel(serviceProvider, gameId);
+        BindingContext = new EditGameViewModel(serviceProvider, game);
     }
 
-    private async void OnUpdateButton_Clicked(object sender, EventArgs e)
+    private async void OnUpdateButtonClicked(object sender, EventArgs e)
     {
         if (BindingContext is not EditGameViewModel editGameViewModel)
         {
@@ -32,6 +32,7 @@ public partial class EditGameView : ContentPage
             if (confirm)
             {
                 editGameViewModel.UpdateGameCommand.Execute(null);
+                await editGameViewModel.EditGameTask;
                 await Navigation.PushAsync(new FrontPageView(_serviceProvider));
             }
         }

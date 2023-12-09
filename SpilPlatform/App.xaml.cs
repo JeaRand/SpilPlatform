@@ -17,11 +17,13 @@ namespace SpilPlatform
         {
             var userDataService = ServiceProvider.GetService<UserDataService>();
             var gameDataService = ServiceProvider.GetService<GameDataService>();
+            var categoryDataService = ServiceProvider.GetService<CategoryDataService>();
 
             if (DeviceInfo.Platform == DevicePlatform.WinUI)
             {
                 userDataService.UserDataFileCheck();
                 gameDataService.GameDataFileCheck();
+                categoryDataService.CategoryDataFileCheck();
 
                 if (!userDataService.CheckAdminExists())
                 {

@@ -25,17 +25,10 @@ namespace SpilPlatform.Mvvm.ViewModels
         }
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public GameViewModel(IServiceProvider serviceProvider, Guid gameId)
+        public GameViewModel(IServiceProvider serviceProvider, Game game)
         {
             _serviceProvider = serviceProvider;
-            LoadGame(gameId);
-        }
-
-        private async void LoadGame(Guid gameId)
-        {
-            var gameDataService = _serviceProvider.GetService<GameDataService>();
-            var games = await gameDataService.LoadGamesAsync();
-            Game = games.FirstOrDefault(Game => Game.Id == gameId);
+            Game = game;
         }
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

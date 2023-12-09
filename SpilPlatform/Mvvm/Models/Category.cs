@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 public class Category
 {
+    public Guid Id { get; set; }
     public string Name { get; set; }
 
     public Category(string name)
@@ -13,4 +14,3 @@ public class Category
         Name = name;
     }
 }
-

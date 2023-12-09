@@ -15,16 +15,20 @@ namespace SpilPlatform.Mvvm.Views
         {
             InitializeComponent();
             _serviceProvider = serviceProvider;
-            BindingContext = new AggregationViewModel(serviceProvider);
+
+            if (BindingContext == null)
+            {
+                BindingContext = new AggregationViewModel(serviceProvider);
+            }
         }
 
         private async void OnAddGameClicked(object sender, EventArgs e)
         {
             try
             {
-                if (sender is Button button && button.BindingContext is Game selectedGame)
+                if (sender is Button button)
                 {
-                    await Navigation.PushAsync(new AddGameView(_serviceProvider, selectedGame.Id));
+                    await Navigation.PushAsync(new AddGameView(_serviceProvider));
                 }
             }
             catch (Exception ex)
@@ -39,7 +43,7 @@ namespace SpilPlatform.Mvvm.Views
             {
                 if (sender is Button button && button.BindingContext is Game selectedGame)
                 {
-                    await Navigation.PushAsync(new EditGameView(_serviceProvider, selectedGame.Id));
+                    await Navigation.PushAsync(new EditGameView(_serviceProvider, selectedGame));
                 }
             }
             catch (Exception ex)
@@ -59,7 +63,7 @@ namespace SpilPlatform.Mvvm.Views
                     {
                         if (BindingContext is AggregationViewModel aggregationViewModel)
                         {
-                            aggregationViewModel.GamesViewModel.DeleteGame(selectedGame);
+                            aggregationViewModel.GamesViewModel.DeleteGameAsync(selectedGame);
                             await DisplayAlert("Slettet", "Spillet er blevet slettet.", "OK");
                         }
                     }
@@ -78,7 +82,7 @@ namespace SpilPlatform.Mvvm.Views
             {
                 if (sender is Button button && button.BindingContext is Game selectedGame)
                 {
-                    await Navigation.PushAsync(new GameView(_serviceProvider, selectedGame.Id));
+                    await Navigation.PushAsync(new GameView(_serviceProvider, selectedGame));
                 }
             }
             catch (Exception ex)
@@ -125,6 +129,15 @@ namespace SpilPlatform.Mvvm.Views
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Navigation error: {ex.Message}");
+            }
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            if (BindingContext is AggregationViewModel aggregationViewModel)
+            {
+                await aggregationViewModel.InitializeViewModelsAsync();
             }
         }
 

@@ -18,7 +18,7 @@ namespace SpilPlatform.Services
             {
                 if (!File.Exists(filePath))
                 {
-                    var seedGames = SeedDataService.Initialize();
+                    var seedGames = SeedDataService.InitializeGames();
                     var seedGameData = JsonConvert.SerializeObject(seedGames);
                     await File.WriteAllTextAsync(filePath, seedGameData);
                     System.Diagnostics.Debug.WriteLine($"File Path: {filePath}");
@@ -61,7 +61,6 @@ namespace SpilPlatform.Services
         {
             var games = await LoadGamesAsync();
 
-            game.Id = Guid.NewGuid();
             games.Add(game);
 
             var gameData = JsonConvert.SerializeObject(games);

@@ -27,6 +27,7 @@ namespace SpilPlatform
 #endif
 
             // Register singletons
+            builder.Services.AddSingleton<CategoryDataService>();
             builder.Services.AddSingleton<GameDataService>();
             builder.Services.AddSingleton<UserDataService>();
             builder.Services.AddSingleton<SessionManagementService>();

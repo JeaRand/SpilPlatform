@@ -6,14 +6,14 @@ public partial class AddGameView : ContentPage
 {
 	private readonly IServiceProvider _serviceProvider;
 
-	public AddGameView(IServiceProvider serviceProvider, Guid gameId)
+	public AddGameView(IServiceProvider serviceProvider)
 	{
 		InitializeComponent();
         _serviceProvider = serviceProvider;
-        BindingContext = new AddGameViewModel(serviceProvider, gameId);
+        BindingContext = new AddGameViewModel(serviceProvider);
     }
 
-    private async void OnSaveButton_Clicked(object sender, EventArgs e)
+    private async void OnSaveButtonClicked(object sender, EventArgs e)
     {
 
         if (BindingContext is not AddGameViewModel addGameViewModel)
@@ -28,6 +28,7 @@ public partial class AddGameView : ContentPage
             if (confirm)
             {
                 addGameViewModel.AddGameCommand.Execute(null);
+                await addGameViewModel.AddGameTask;
                 await Navigation.PushAsync(new FrontPageView(_serviceProvider));
             }
         }

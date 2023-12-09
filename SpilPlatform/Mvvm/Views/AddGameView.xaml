@@ -2,11 +2,56 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SpilPlatform.Mvvm.Views.AddGameView"
-             Title="AddGameView">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             Title="Tilføj nyt spil">
+
+    <!-- Background with gradient effect -->
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#1C1C1C" Offset="0.0"/>
+            <GradientStop Color="#333333" Offset="1.0"/>
+        </LinearGradientBrush>
+    </ContentPage.Background>
+    
+    <ScrollView>
+        <VerticalStackLayout Spacing="20" Padding="20">
+
+            <!-- Title Entry -->
+            <Label Text="Titel" />
+            <Entry Placeholder="Indtast titel" Text="{Binding Title}" />
+
+            <!-- Description Editor -->
+            <Label Text="Beskrivelse" />
+            <Editor Placeholder="Indtast beskrivelse" Text="{Binding Description}" />
+
+            <!-- Link Entry -->
+            <Label Text="Link" />
+            <Entry Placeholder="Indtast link" Text="{Binding Link}" />
+
+            <!-- Categories Picker -->
+            <Label Text="Kategorier" />
+            <ListView ItemsSource="{Binding Categories}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal">
+                                <CheckBox IsChecked="{Binding IsSelected}" />
+                                <Label Text="{Binding Category.Name}" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <!-- Save Button -->
+            <Button Text="Gem" Clicked="OnSaveButtonClicked" />
+
+            <!-- Back Button -->
+            <Button Text="Tilbage"
+                    BackgroundColor="#D6E295"
+                    Clicked="OnBackButtonClicked"
+                    FontSize="20"
+                    HorizontalOptions="CenterAndExpand"
+                    TextColor="Black" />
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

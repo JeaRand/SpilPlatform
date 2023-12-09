@@ -11,11 +11,11 @@ public partial class GameView : ContentPage
 {
     private readonly IServiceProvider _serviceProvider;
 
-    public GameView(IServiceProvider serviceProvider, Guid gameId)
+    public GameView(IServiceProvider serviceProvider, Game game)
     {
         InitializeComponent();
         _serviceProvider = serviceProvider;
-        BindingContext = new GameViewModel(serviceProvider, gameId);
+        BindingContext = new GameViewModel(serviceProvider, game);
     }
 
     private async void OnBackButtonClicked(object sender, EventArgs e)

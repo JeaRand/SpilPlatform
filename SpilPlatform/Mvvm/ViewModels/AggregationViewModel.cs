@@ -38,10 +38,10 @@ namespace SpilPlatform.Mvvm.Views
         public AggregationViewModel(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
-            GamesViewModel = new GamesViewModel(serviceProvider);
-            CategoryViewModel = new CategoryViewModel();
 
-            // Subscribe to PropertyChanged event of sessionManagementService
+            GamesViewModel = new GamesViewModel(serviceProvider);
+            CategoryViewModel = new CategoryViewModel(serviceProvider);
+
             var sessionManagementService = _serviceProvider.GetService<SessionManagementService>();
             sessionManagementService.PropertyChanged += OnSessionServicePropertyChanged;
         }
@@ -50,6 +50,13 @@ namespace SpilPlatform.Mvvm.Views
         {
             var sessionManagementService = _serviceProvider.GetService<SessionManagementService>();
             sessionManagementService.LogOut();
+        }
+
+        public async Task InitializeViewModelsAsync()
+        {
+            await GamesViewModel.InitializeAsync();
+            
+            // Initialize other view models if needed
         }
 
         private void OnSessionServicePropertyChanged(object sender, PropertyChangedEventArgs e)

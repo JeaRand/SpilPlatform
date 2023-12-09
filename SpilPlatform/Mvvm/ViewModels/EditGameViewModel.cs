@@ -8,89 +8,114 @@ using System.Text;
 using System.Threading.Tasks;
 using SpilPlatform.Mvvm.Models;
 using System.Windows.Input;
+using System.Collections.ObjectModel;
 
 namespace SpilPlatform.Mvvm.ViewModels
 {
     public class EditGameViewModel : INotifyPropertyChanged
     {
         private readonly IServiceProvider _serviceProvider;
+        private TaskCompletionSource<bool> editGameCompletionSource;
 
-        private Game game;
+        private Game originalGame;
 
-        private string title { get; set; }
-        private string description { get; set; }
-        private long iconFileName { get; set; }
-        private string link { get; set; }
-        private List<Category> categories { get; set; }
+        // Properties for displaying original game values
+        public string OriginalTitle => originalGame?.Title;
+        public string OriginalDescription => originalGame?.Description;
+        public long OriginalIconFileName => originalGame.IconFileName;
+        public string OriginalLink => originalGame?.Link;
+        public Category[] OriginalCategories => originalGame?.Categories;
+        public ObservableCollection<Category> OriginalCategoriesDisplay { get; private set; }
 
-        public string Title
+        // Properties bound to input fields for new values
+        private string newTitle;
+        private string newDescription;
+        private long newIconFileName;
+        private string newLink;
+        public ObservableCollection<CategorySelectionViewModel> NewCategories { get; private set; }
+
+        public Game OriginalGame
         {
-            get => title;
-            set { title = value; OnPropertyChanged(); }
+            get => originalGame;
+            set
+            {
+                originalGame = value;
+                OnPropertyChanged(nameof(Game));
+            }
         }
-
-        public string Description
+        // New value properties
+        public string NewTitle
         {
-            get => description;
-            set { description = value; OnPropertyChanged(); }
+            get => newTitle;
+            set
+            {
+                newTitle = value;
+                OnPropertyChanged();
+            }
         }
-
-        public long IconFileName
+        public string NewDescription
         {
-            get => iconFileName;
-            set { iconFileName = value; OnPropertyChanged(); }
+            get => newDescription;
+            set 
+            { 
+                newDescription = value; 
+                OnPropertyChanged(); 
+            }
         }
-
-        public string Link
+        public long NewIconFileName
         {
-            get => link;
-            set { link = value; OnPropertyChanged(); }
+            get => newIconFileName;
+            set 
+            { 
+                newIconFileName = value; 
+                OnPropertyChanged(); 
+            }
         }
-
-        public List<Category> Categories
+        public string NewLink
         {
-            get => categories;
-            set { categories = value; OnPropertyChanged(); }
-        }
-
-        public EditGameViewModel(IServiceProvider serviceProvider, Guid gameId)
-        {
-            _serviceProvider = serviceProvider;
-            LoadGameDetails(gameId);
-            UpdateGameCommand = new Command(async () => await UpdateGame(), CanUpdate);
+            get => newLink;
+            set 
+            { 
+                newLink = value; 
+                OnPropertyChanged(); 
+            }
         }
 
         public ICommand UpdateGameCommand { get; }
 
-        private async void LoadGameDetails(Guid gameId)
+        public EditGameViewModel(IServiceProvider serviceProvider, Game game)
         {
-            var gameDataService = _serviceProvider.GetService<GameDataService>();
-            var games = await gameDataService.LoadGamesAsync();
-            game = games.FirstOrDefault(Game => Game.Id == gameId);
+            _serviceProvider = serviceProvider;
+            OriginalGame = game;
+            NewCategories = new ObservableCollection<CategorySelectionViewModel>();
+            OriginalCategoriesDisplay = new ObservableCollection<Category>();
+            LoadCategories();
+            System.Diagnostics.Debug.WriteLine($"{originalGame.Title}, {originalGame.Description}");
+            UpdateGameCommand = new Command(async () => await UpdateGame(), CanUpdate);
         }
 
         private bool CanUpdate()
         {
-            return !string.IsNullOrWhiteSpace(Title) ||
-                   !string.IsNullOrWhiteSpace(Link);
+            return !string.IsNullOrWhiteSpace(NewTitle) &&
+                   !string.IsNullOrWhiteSpace(NewLink);
         }
 
         private async Task UpdateGame()
         {
             var gameDataService = _serviceProvider.GetService<GameDataService>();
             var games = await gameDataService.LoadGamesAsync();
-            games.Remove(games.FirstOrDefault(x => x.Id == game.Id));
+            games.Remove(games.FirstOrDefault(x => x.Id == originalGame.Id));
 
-            if (games.Any(x => x.Title == title) && games.Any(x => x.Link == link))
+            if (games.Any(x => x.Title == newTitle) && games.Any(x => x.Link == newLink))
             {
                 OnTitleExists();
                 OnLinkExists();
             }
-            else if (games.Any(x => x.Title == title))
+            else if (games.Any(x => x.Title == newTitle))
             {
                 OnTitleExists();
             }
-            else if (games.Any(x => x.Link == link))
+            else if (games.Any(x => x.Link == newLink))
             {
                 OnLinkExists();
             }
@@ -98,17 +123,32 @@ namespace SpilPlatform.Mvvm.ViewModels
             {
                 Game newGame = new()
                 {
-                    Title = title,
-                    Description = description,
-                    IconFileName = iconFileName,
-                    Link = link,
-                    Categories = categories.ToArray()
+                    Title = newTitle,
+                    Description = newDescription,
+                    IconFileName = newIconFileName,
+                    Link = newLink,
+                    Categories = NewCategories.Where(x => x.IsSelected).Select(x => x.Category).ToArray()
                 };
 
                 await gameDataService.SaveGameDataAsync(newGame);
             }
         }
 
+        private async void LoadCategories()
+        {
+            var categoryDataService = _serviceProvider.GetService<CategoryDataService>();
+            var categories = await categoryDataService.LoadCategoriesAsync();
+            foreach (var category in categories)
+            {
+                NewCategories.Add(new CategorySelectionViewModel(category));
+            }
+            foreach (var category in OriginalCategories)
+            {
+                OriginalCategoriesDisplay.Add(category);
+            }
+        }
+
+        public Task<bool> EditGameTask => editGameCompletionSource?.Task;
         public event Action TitleExists;
         public event Action LinkExists;
 

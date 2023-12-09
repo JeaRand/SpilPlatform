@@ -4,42 +4,89 @@
              x:Class="SpilPlatform.Mvvm.Views.EditGameView"
              Title="Rediger">
 
+    <!-- Background with gradient effect -->
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#1C1C1C" Offset="0.0"/>
+            <GradientStop Color="#333333" Offset="1.0"/>
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
     <ScrollView>
-        <VerticalStackLayout Spacing="20" Padding="20">
+        <Grid Padding="20" RowSpacing="20" ColumnSpacing="40">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-            <!-- Title Entry -->
-            <Label Text="Titel" />
-            <Entry Placeholder="Title" Text="{Binding Title}" />
-            
-            <!-- Description Editor -->
-            <Label Text="Beskrivelse" />
-            <Editor Placeholder="Description" Text="{Binding Description}" />
+            <!-- Left Column for New Data Input -->
+            <VerticalStackLayout Grid.Column="0">
+                <!-- New Title Entry -->
+                <Label Text="Ny titel" />
+                <Entry Placeholder="Indtast ny titel" Text="{Binding NewTitle}" />
 
-            <!-- Icon File Name Entry (adjust as needed) -->
-            <Label Text="Titel" />
-            <Entry Placeholder="Icon File Name" Text="{Binding IconFileName}" Keyboard="Numeric" />
+                <!-- New Description Editor -->
+                <Label Text="Ny beskrivelse" />
+                <Editor Placeholder="Indtast ny beskrivelse" Text="{Binding NewDescription}" />
 
-            <!-- Link Entry -->
-            <Label Text="Titel" />
-            <Entry Placeholder="Link" Text="{Binding Link}" />
+                <!-- New Link Entry -->
+                <Label Text="Nyt link" />
+                <Entry Placeholder="Indtast nyt link" Text="{Binding NewLink}" />
 
-            <!-- Categories (Modify as needed) -->
-            <Label Text="Categories (Modify as needed)" />
-            <!-- Add your categories UI here -->
+                <!-- New Categories Picker -->
+                <Label Text="Nye kategorier" />
+                <ListView ItemsSource="{Binding NewCategories}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Orientation="Horizontal">
+                                    <CheckBox IsChecked="{Binding IsSelected}" />
+                                    <Label Text="{Binding Category.Name}" />
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </VerticalStackLayout>
 
-            <!-- Update Button -->
-            <Button Text="Update" Command="{Binding UpdateGameCommand}" />
-            
-            <!-- Back Button -->
-            <Button Grid.Row="1"
-                    Grid.Column="0"
-                    Margin="0,20,0,0"
-                    BackgroundColor="#D6E295"
-                    Clicked="OnBackButtonClicked"
-                    FontSize="20"
-                    HorizontalOptions="CenterAndExpand"
-                    Text="Back"
-                    TextColor="Black" />
-        </VerticalStackLayout>
+            <!-- Right Column for Displaying Original Data -->
+            <VerticalStackLayout Grid.Column="1">
+                <!-- Original Title -->
+                <Label Text="Oprindelig titel" />
+                <Label Text="{Binding OriginalTitle}" />
+
+                <!-- Original Description -->
+                <Label Text="Oprindelig beskrivelse" />
+                <Label Text="{Binding OriginalDescription}" />
+
+                <!-- Original Link -->
+                <Label Text="Oprindelig link" />
+                <Label Text="{Binding OriginalLink}" />
+
+                <!-- Original Categories -->
+                <Label Text="Oprindelig kategorier" />
+                <ListView ItemsSource="{Binding OriginalCategoriesDisplay}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Label Text="{Binding Name}" />
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+
+                <Button Text="Opdater" Clicked="OnUpdateButtonClicked" 
+                        HorizontalOptions="Center" VerticalOptions="End" 
+                        BackgroundColor="#D6E295" TextColor="Black" 
+                        Margin="0,20,0,0"/>
+
+                <Button Text="Tilbage" Clicked="OnBackButtonClicked" 
+                        HorizontalOptions="Center" VerticalOptions="End" 
+                        BackgroundColor="#D6E295" TextColor="Black" 
+                        Margin="0,0,0,20"/>
+
+            </VerticalStackLayout>
+        </Grid>
     </ScrollView>
 </ContentPage>

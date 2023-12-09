@@ -6,22 +6,38 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using SpilPlatform.Services;
 
 namespace SpilPlatform.Mvvm.ViewModels
 {
     public class CategoryViewModel : INotifyPropertyChanged
     {
-        public ObservableCollection<Category> Categories { get; set; }
+        private readonly IServiceProvider _serviceProvider;
+        public ObservableCollection<Category> Categories { get; private set; }
 
-        public CategoryViewModel()
+        public CategoryViewModel(IServiceProvider serviceProvider)
         {
-            Categories = new ObservableCollection<Category>
+            _serviceProvider = serviceProvider;
+            Categories = new ObservableCollection<Category>();
+            LoadCategories();
+        }
+
+        public async void DeleteCategory(Category category)
         {
-            new Category("0.-1. klasse"),
-            new Category("2.-3. klasse"),
-            new Category("4.-5. klasse"),
-            new Category("6.+ klasse")
-        };
+            var categoryDataService = _serviceProvider.GetService<CategoryDataService>();
+            await categoryDataService.DeleteCategoryDataAsync(category);
+            Categories.Clear();
+            LoadCategories();
+        }
+
+        private async void LoadCategories()
+        {
+            var categoryDataService = _serviceProvider.GetService<CategoryDataService>();
+            var categories = await categoryDataService.LoadCategoriesAsync();
+            foreach (var category in categories)
+            {
+                Categories.Add(category);
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -30,5 +46,4 @@ namespace SpilPlatform.Mvvm.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
-
 }
