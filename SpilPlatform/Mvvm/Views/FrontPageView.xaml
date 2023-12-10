@@ -119,15 +119,20 @@
             </Frame>
 
             <!-- Horizontal list with category buttons -->
-            <ScrollView Orientation="Horizontal" HorizontalOptions="Center" Padding="0,10">
-                <StackLayout Orientation="Horizontal" Spacing="40">
-                    <!-- Category buttons -->
-                    <Button Text="0-1 klasse" Style="{StaticResource CategoryButtonStyle}" FontAttributes="Bold" TextColor="White"/>
-                    <Button Text="2-3 klasse" Style="{StaticResource CategoryButtonStyle}" FontAttributes="Bold" TextColor="White"/>
-                    <Button Text="4-5 klasse" Style="{StaticResource CategoryButtonStyle}" FontAttributes="Bold" TextColor="White"/>
-                    <Button Text="6-7 klasse" Style="{StaticResource CategoryButtonStyle}" FontAttributes="Bold" TextColor="White"/>
+            <!--<ScrollView Orientation="Horizontal" HorizontalOptions="Center" Padding="0,10">
+                <StackLayout Orientation="Horizontal" Spacing="40" BindableLayout.ItemsSource="{Binding CategoryViewModel.Categories}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <Button Text="{Binding Name}" 
+                                    Style="{StaticResource CategoryButtonStyle}" 
+                                    FontAttributes="Bold" 
+                                    TextColor="White"
+                                    Clicked="OnCategoryClicked"
+                                    CommandParameter="{Binding .}"/>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
                 </StackLayout>
-            </ScrollView>
+            </ScrollView>-->
 
             <!-- White line separator between category and game tiles -->
             <BoxView Style="{StaticResource BoxViewBackgroundColor}" HeightRequest="3" />

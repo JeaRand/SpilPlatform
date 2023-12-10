@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SpilPlatform.Mvvm.ViewModels
 {
-    public class CategorySelectionViewModel
+    public class CategorySelectionViewModel : INotifyPropertyChanged
     {
         public Category Category { get; private set; }
         private bool isSelected;

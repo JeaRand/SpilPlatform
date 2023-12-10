@@ -128,19 +128,24 @@ namespace SpilPlatform.Mvvm.Views
                 System.Diagnostics.Debug.WriteLine($"Navigation error: {ex.Message}");
             }
         }
+        //private async void OnCategoryClicked(object sender, EventArgs e)
+        //{
+        //    if (sender is Button button && button.CommandParameter is Category category)
+        //    {
+        //        if (BindingContext is AggregationViewModel aggregationViewModel)
+        //        {
+        //            System.Diagnostics.Debug.WriteLine($"Category clicked: {category.Name}");
+        //        }
+        //    }
+        //}
 
-        protected override async void OnAppearing()
+        protected override void OnAppearing()
         {
             base.OnAppearing();
             if (BindingContext is AggregationViewModel aggregationViewModel)
             {
-                await aggregationViewModel.InitializeViewModelsAsync();
+                aggregationViewModel.InitializeViewModels();
             }
         }
-
-        //void OnGameCategoryClicked(object sender, EventArgs e)
-        //{
-        //    Navigation.PushAsync(new GameView(_serviceProvider));
-        //}
     }
 }

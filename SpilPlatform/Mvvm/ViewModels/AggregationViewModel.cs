@@ -52,7 +52,7 @@ namespace SpilPlatform.Mvvm.Views
             sessionManagementService.LogOut();
         }
 
-        public async Task InitializeViewModelsAsync()
+        public async void InitializeViewModels()
         {
             await GamesViewModel.InitializeAsync();
             

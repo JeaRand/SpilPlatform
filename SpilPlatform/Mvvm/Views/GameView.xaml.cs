@@ -4,6 +4,7 @@ using SpilPlatform.Mvvm.Views;
 using System;
 using Microsoft.Maui.Controls;
 using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics;
 
 namespace SpilPlatform.Mvvm.Views;
 

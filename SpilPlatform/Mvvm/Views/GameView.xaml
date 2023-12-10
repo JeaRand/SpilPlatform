@@ -14,7 +14,7 @@
 
     <ScrollView>
         <VerticalStackLayout>
-            <WebView Source="{Binding Game.Link}" WidthRequest="1440" HeightRequest="900" Margin="0,50,0,0" />
+            <WebView x:Name="GameWebView" Source="{Binding Game.Link}" WidthRequest="1440" HeightRequest="900" Margin="0,50,0,0" />
             <Button Margin="0,20,0,0"
                     BackgroundColor="#D6E295"
                     Clicked="OnBackButtonClicked"
