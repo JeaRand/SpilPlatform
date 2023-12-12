@@ -12,7 +12,7 @@ namespace SpilPlatform.Services
 {
     public class UserDataService
     {
-        private readonly string filePath = Path.Combine(FileSystem.AppDataDirectory, "userdata.json");
+        private readonly string filePath = Path.Combine(FileSystem.AppDataDirectory, "spilplatformuserdata.json");
 
         public bool CheckAdminExists()
         {

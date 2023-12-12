@@ -16,16 +16,15 @@ namespace SpilPlatform
         private void InitializeAppData()
         {
             var categoryDataService = ServiceProvider.GetService<CategoryDataService>();
-            var userDataService = ServiceProvider.GetService<UserDataService>();
             var gameDataService = ServiceProvider.GetService<GameDataService>();
+            var userDataService = ServiceProvider.GetService<UserDataService>();
+
+            categoryDataService.CategoryDataFileCheck();
+            gameDataService.GameDataFileCheck();
+            userDataService.UserDataFileCheck();
 
             if (DeviceInfo.Platform == DevicePlatform.WinUI)
             {
-                categoryDataService.CategoryDataFileCheck();
-                userDataService.UserDataFileCheck();
-                gameDataService.GameDataFileCheck();
-                
-
                 if (!userDataService.CheckAdminExists())
                 {
                     MainPage = new NavigationPage(new RegistrationView(ServiceProvider)); // Navigate to RegistrationView

@@ -10,7 +10,7 @@ namespace SpilPlatform.Services
 {
     public class GameDataService
     {
-        private readonly string filePath = Path.Combine(FileSystem.AppDataDirectory, "gamedata.json");
+        private readonly string filePath = Path.Combine(FileSystem.AppDataDirectory, "spilplatformgamedata.json");
 
         public async void GameDataFileCheck()
         {

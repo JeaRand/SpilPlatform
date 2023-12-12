@@ -11,7 +11,7 @@ namespace SpilPlatform.Services
 {
     public class CategoryDataService
     {
-        private readonly string filePath = Path.Combine(FileSystem.AppDataDirectory, "categorydata.json");
+        private readonly string filePath = Path.Combine(FileSystem.AppDataDirectory, "spilplatformcategorydata.json");
 
         public async void CategoryDataFileCheck()
         {

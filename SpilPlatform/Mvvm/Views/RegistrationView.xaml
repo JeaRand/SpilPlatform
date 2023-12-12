@@ -70,11 +70,8 @@
                     BorderColor="Black"
                     Text="Gem"
                     TextColor="White"
-                    WidthRequest="80">
-                    <Button.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnRegisterButtonTapped" NumberOfTapsRequired="1"/>
-                    </Button.GestureRecognizers>
-            </Button>
+                    WidthRequest="80"/>
+
 
         </StackLayout>
     </ScrollView>

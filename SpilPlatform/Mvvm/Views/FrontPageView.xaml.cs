@@ -146,6 +146,11 @@ namespace SpilPlatform.Mvvm.Views
             {
                 aggregationViewModel.InitializeViewModels();
             }
+            else
+            {
+                BindingContext = new AggregationViewModel(_serviceProvider);
+                ((AggregationViewModel)BindingContext).InitializeViewModels();
+            }
         }
     }
 }

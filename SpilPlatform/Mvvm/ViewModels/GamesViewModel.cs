@@ -11,9 +11,19 @@ namespace SpilPlatform.Mvvm.ViewModels
     public class GamesViewModel : INotifyPropertyChanged
     {
         private readonly IServiceProvider _serviceProvider;
-        public ObservableCollection<Game> Games { get; private set; } = new ObservableCollection<Game>();
-        private string searchText;
 
+        private ObservableCollection<Game> _games;
+        public ObservableCollection<Game> Games
+        {
+            get => _games;
+            private set
+            {
+                _games = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string searchText;
         public string SearchText
         {
             get => searchText;

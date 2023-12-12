@@ -22,7 +22,7 @@ public partial class RegistrationView : ContentPage
             {
                 registrationViewModel.RegisterUser();
 
-                await Navigation.PushAsync(new FrontPageView(_serviceProvider));
+                await Navigation.PushAsync(new LoginView(_serviceProvider));
             }
             else
             {
@@ -33,16 +33,5 @@ public partial class RegistrationView : ContentPage
         {
             System.Diagnostics.Debug.WriteLine("RegisterButton condition failed");
         }
-    }
-
-    private async void OnRegisterButtonTapped(object sender, EventArgs e)
-    {
-        const uint animationDuration = 100; // Duration in milliseconds
-
-        var button = (Button)sender;
-        // Shrink the button to 95% of its size
-        await button.ScaleTo(0.95, animationDuration, Easing.Linear);
-        // Return to original size
-        await button.ScaleTo(1, animationDuration, Easing.Linear);
     }
 }
